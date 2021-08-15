@@ -1,7 +1,7 @@
 import { BarChartWrapper } from "../components/BarChartWrapper";
 import { PieChartWrapper } from "../components/PieChartWrapper";
 
-import styles from '../styles/Charts.module.css'
+// import styles from '../styles/Charts.module.css'
 
 export default function Charts() {
   const data = [
@@ -11,7 +11,7 @@ export default function Charts() {
   ]
 
   return (
-    <div className={styles.container}>
+    <div>
       <PieChartWrapper data={data} />
       {/* <BarChartWrapper data={data} /> */}
     </div>
