@@ -18,7 +18,7 @@ export function Upload() {
     isDragActive, 
     isDragReject
   } = useDropzone({
-    accept: ["image/*"],
+    accept: ["application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"],
     onDrop
   });
   

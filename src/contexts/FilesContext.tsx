@@ -18,6 +18,7 @@ type FileProps = {
 
 type FileContextData = {
   uploadedFiles: FileProps[];
+  dataAnalysis: any;
   deleteFile: (id: string) => void;
   handleUpload: (files: File[]) => void;
 }
@@ -30,6 +31,7 @@ export const FileContext = createContext({} as FileContextData);
 
 export function FileContextProvider({children}: FileContextProviderProps) {
   const [uploadedFiles, setUploadedFiles] = useState<FileProps[]>([]);
+  const [dataAnalysis, setDataAnalysis] = useState([]);
 
   const updateFile = (id, data) => {
     setUploadedFiles((state) =>
@@ -49,11 +51,12 @@ export function FileContextProvider({children}: FileContextProviderProps) {
         let progress = Math.round((progressEvent.loaded * 100) / progressEvent.total);
         updateFile(uploadedFile.id, { progress });
       }
-    }).then(() => {
-      updateFile(uploadedFile.id, { uploaded: true })
+    }).then(response => {
+      updateFile(uploadedFile.id, { uploaded: true });
+      setDataAnalysis(state => state.concat(response.data));
     }).catch(() => {
-      updateFile(uploadedFile.id, { error: true })
-    })
+      updateFile(uploadedFile.id, { error: true });
+    });
   }
 
   const handleUpload = (files: File[]) => {
@@ -81,6 +84,7 @@ export function FileContextProvider({children}: FileContextProviderProps) {
   return (
     <FileContext.Provider value={{
       uploadedFiles,
+      dataAnalysis,
       deleteFile,
       handleUpload
     }}>
