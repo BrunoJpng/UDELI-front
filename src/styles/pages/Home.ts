@@ -8,11 +8,17 @@ export const Container = styled.div`
   height: 100vh;
   gap: 1rem;
 
-  > div {
+  main {
     width: 100%;
-    max-width: 400px;
+    max-width: 700px;
     background: #fff;
     border-radius: 4px;
     padding: 1.25rem;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
   }
 `;

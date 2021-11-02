@@ -21,7 +21,7 @@ export function FileList() {
       {uploadedFiles.map(uploadedFile => (
         <li key={uploadedFile.id}>
           <FileInfo>
-            <Preview src={uploadedFile.preview} />
+            {/* <Preview src={uploadedFile.preview} /> */}
             <div>
               <strong>{uploadedFile.name}</strong>
               <span>
@@ -33,7 +33,7 @@ export function FileList() {
             </div>
           </FileInfo>
 
-          <div>
+          {/* <div>
             {!uploadedFile.uploaded && !uploadedFile.error && (
               <CircularProgressbar 
                 styles={{
@@ -52,7 +52,7 @@ export function FileList() {
             )}
             {uploadedFile.uploaded && <MdCheckCircle size={24} color="#78e5d5" />}
             {uploadedFile.error && <MdError size={24} color="#e57878" />}
-          </div>
+          </div> */}
         </li>
       ))}
     </Container>

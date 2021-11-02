@@ -9,11 +9,11 @@ type FileProps = {
   name: string;
   readableSize: string;
   uploaded?: boolean;
-  preview: string;
+  // preview: string;
   file: File | null;
   progress?: number;
   error?: boolean;
-  url: string;
+  // url: string;
 }
 
 type FileContextData = {
@@ -40,13 +40,13 @@ export function FileContextProvider({children}: FileContextProviderProps) {
   }
 
   const processUpload = (uploadedFile: FileProps) => {
-    const data = new FormData();
+    const formData = new FormData();
 
     if (uploadedFile.file) {
-      data.append("file", uploadedFile.file, uploadedFile.name);
+      formData.append("file", uploadedFile.file, uploadedFile.name);
     }
 
-    api.post("/upload", data, {
+    api.post("/upload", formData, {
       onUploadProgress: (progressEvent) => {
         let progress = Math.round((progressEvent.loaded * 100) / progressEvent.total);
         updateFile(uploadedFile.id, { progress });
@@ -65,15 +65,15 @@ export function FileContextProvider({children}: FileContextProviderProps) {
       id: uuidv4(),
       name: file.name,
       readableSize: filesize(file.size),
-      preview: URL.createObjectURL(file),
+      // preview: URL.createObjectURL(file),
       progress: 0,
       uploaded: false,
       error: false,
-      url: "",
+      // url: "",
     }));
 
     setUploadedFiles(state => state.concat(newUploadedFiles));
-    newUploadedFiles.forEach(processUpload);
+    // newUploadedFiles.forEach(processUpload);
   };
 
   const deleteFile = (id: string) => {
