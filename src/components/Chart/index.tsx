@@ -1,13 +1,21 @@
-import { BarChart, Bar, CartesianGrid, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { BarChart } from './BarChart';
+import { LineChart } from './LineChart';
+import { PieChart } from './PieChart';
+
 import { Container } from './styles';
 
-type RechartProps = {
+type ChartProps = {
   data: Object;
   label: string;
 }
 
-export function Chart({ data, label }: RechartProps) {
-  const dataFormatted = Object.entries(data).map(entry => {
+type FormattedDataProps = Array<{
+  name: string;
+  value: number;
+}>
+
+export function Chart({ data, label }: ChartProps) {
+  const formattedData: FormattedDataProps = Object.entries(data).map(entry => {
     const [name, value] = entry;
 
     return {
@@ -17,26 +25,18 @@ export function Chart({ data, label }: RechartProps) {
   });
 
   return (
-    <Container>
-      {/* <h3>{label}</h3> */}
-      <ResponsiveContainer width="90%" height={300} minWidth={900}>
-        <BarChart 
-          data={dataFormatted} 
-          margin={{
-            top: 5,
-            right: 30,
-            left: 0,
-            bottom: 5,
-          }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <Bar dataKey="value" name={label} fill="#8884d8" />
-        </BarChart>
-      </ResponsiveContainer>
+    <Container
+      className={formattedData.length >= 5 && "landscape"}>
+      <h2>{label}</h2>
+      {label.includes("período") ? (
+        <LineChart data={formattedData} label="Cancelamentos" />
+      ) : (
+        formattedData.length <= 6 ? (
+          <PieChart data={formattedData} />
+        ) : (
+          <BarChart data={formattedData} />
+        )
+      )}
     </Container>
   );
 }

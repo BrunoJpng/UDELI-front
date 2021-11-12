@@ -115,20 +115,6 @@
     "2021-06": 4,
     "2021-07": 10
   },
-  "Preferência por método de pagamento": {
-    "MercadoPago Boleto": {
-      "usos": 652,
-      "aprovados": 339
-    },
-    "MercadoPago V1": {
-      "usos": 764,
-      "aprovados": 462
-    },
-    "Pagamento na entrega": {
-      "usos": 16,
-      "aprovados": 10
-    }
-  },
   "Preferência por método de envio": {
     "Retirar pessoalmente": 43,
     "PAC": 748,

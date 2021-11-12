@@ -26,7 +26,8 @@ export default createGlobalStyle`
   }
 
   body, input, textarea, button {
-    font: 400 1rem "Inter", sans-serif;
+    font: 400 1rem Poppins, sans-serif;
+    color: #6a6180;
   }
 
   button {

@@ -5,12 +5,28 @@ type DropContainerProps = {
   isDragReject?: boolean;
 }
 
+type UploadMessageProps = {
+  type?: "default" | "error" | "success";
+}
+
+const messageColors = {
+  default: '#999',
+  error: '#e57878',
+  success: '#78e5d5'
+}
+
 const dragActive = css`
   border-color: #78e5d5;
 `;
 
 const dragReject = css`
   border-color: #e57878;
+`;
+
+export const Container = styled.div`
+  span {
+    font-size: 14px;
+  }
 `;
 
 export const DropContainer = styled.div<DropContainerProps>`
@@ -23,17 +39,6 @@ export const DropContainer = styled.div<DropContainerProps>`
   ${props => props.isDragActive && dragActive};
   ${props => props.isDragReject && dragReject};
 `;
-
-
-type UploadMessageProps = {
-  type?: "default" | "error" | "success";
-}
-
-const messageColors = {
-  default: '#999',
-  error: '#e57878',
-  success: '#78e5d5'
-}
 
 export const UploadMessage = styled.p<UploadMessageProps>`
   display: flex;

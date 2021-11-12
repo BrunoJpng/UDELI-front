@@ -2,20 +2,22 @@ import { Chart } from "../components/Chart";
 
 import { Container } from "../styles/pages/Resultado";
 
-// import { useCharts } from "../hooks/useCharts";
+// import { useData } from "../hooks/useData";
 
 import data from "../../data.json"
 
 export default function Resultado() {
-  // const { data } = useCharts();
+  // const { data } = useData();
 
   return (
     <Container>
-      {Object.keys(data).map(key => {
-        return (
-          <Chart key={key} label={key} data={data[key]} />
-        )
-      })}
+      <main>
+        {Object.keys(data).map(key => {
+          return (
+            <Chart key={key} label={key} data={data[key]} />
+          )
+        })}
+      </main>
     </Container>
   );
 }
