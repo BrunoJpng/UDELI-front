@@ -6,16 +6,13 @@ import { Scope } from '@unform/core';
 import { FileContextProvider } from '../contexts/FilesContext';
 
 import { FileList } from '../components/FileList';
-import { Datepicker } from '../components/Form/Datepicker';
-import { Dropzone } from '../components/Form/Dropzone';
-import { Input } from '../components/Form/Input';
-import { Select } from '../components/Form/Select';
+import { Checkbox, Datepicker, Dropzone, Select } from '../components/Form';
 
 import { useData } from '../hooks/useData';
 
 import { api } from '../services/api';
 
-import { Container, PeriodContainer } from '../styles/pages/Home';
+import { Button, Container, PeriodContainer } from '../styles/pages/Home';
 
 export default function Home() {  
   const [incomesPeriod, setIncomesPeriod] = useState(false);
@@ -56,8 +53,8 @@ export default function Home() {
             <legend>Quantidade de Pedidos por</legend>
 
             <Scope path="address">
-              <Input name="city" label="Cidade" />
-              <Input name="state" label="Estado" />
+              <Checkbox name="city" label="Cidade" />
+              <Checkbox name="state" label="Estado" />
             </Scope>
           </fieldset>
 
@@ -65,13 +62,12 @@ export default function Home() {
             <legend>Faturamento</legend>
 
             <Scope path="incomes">
-              <Input name="product" label="Por Produto" />
-              <Input name="period" label="Por Período" onClick={() => setIncomesPeriod(!incomesPeriod)} />
+              <Checkbox name="product" label="Por Produto" />
+              <Checkbox name="period" label="Por Período" onClick={() => setIncomesPeriod(!incomesPeriod)} />
 
               {incomesPeriod && (
                 <PeriodContainer>
-                  <Datepicker name="date.from" label="De" />
-                  <Datepicker name="date.to" label="Até" />
+                  <Datepicker name="date" label="Período" />
                   <Select
                     name="frequency"
                     label="Visualizar por:"
@@ -90,9 +86,9 @@ export default function Home() {
             <legend>Gênero dos Clientes</legend>
 
             <Scope path="gender">
-              <Input name="all" label="Todos Cadastrados" />
-              <Input name="withOrders" label="Que fizeram pedido(s)" />
-              <Input name="withOrdersDelivered" label="Com pedido(s) entregue(s)" />
+              <Checkbox name="all" label="Todos Cadastrados" />
+              <Checkbox name="withOrders" label="Que fizeram pedido(s)" />
+              <Checkbox name="withOrdersDelivered" label="Com pedido(s) entregue(s)" />
             </Scope>
 
           </fieldset>
@@ -101,8 +97,8 @@ export default function Home() {
             <legend>Reincidência de Compra</legend>
 
             <Scope path="repeatCostumers">
-              <Input name="list" label="Lista de clientes reincidentes" />
-              <Input name="percentage" label="Porcentagem de clientes reincidentes" />
+              <Checkbox name="list" label="Lista de clientes reincidentes" />
+              <Checkbox name="percentage" label="Porcentagem de clientes reincidentes" />
             </Scope>
           </fieldset>
 
@@ -110,8 +106,8 @@ export default function Home() {
             <legend>Identificação de</legend>
 
             <Scope path="identification">
-              <Input name="ageGroup" label="Faixa Etária" />
-              <Input
+              <Checkbox name="ageGroup" label="Faixa Etária" />
+              <Checkbox
                 name="periodsWithMoreRegistrations"
                 label="Períodos com mais cadastros"
                 onClick={() => setIdentificationPeriod(!identificationPeriod)}
@@ -119,8 +115,7 @@ export default function Home() {
               
               {identificationPeriod && (
                 <PeriodContainer>
-                  <Datepicker name="date.from" label="De" />
-                  <Datepicker name="date.to" label="Até" />
+                  <Datepicker name="date" label="Período" />
                   <Select
                     name="frequency"
                     label="Visualizar por:"
@@ -139,7 +134,7 @@ export default function Home() {
             <legend>Taxa de Cancelamento dos Pedidos</legend>
 
             <Scope path="cancellation">
-              <Input
+              <Checkbox
                 name="period"
                 label="Por Período"
                 onClick={() => setCancellationPeriod(!cancellationPeriod)}
@@ -147,8 +142,7 @@ export default function Home() {
 
               {cancellationPeriod && (
                 <PeriodContainer>
-                  <Datepicker name="date.from" label="De" />
-                  <Datepicker name="date.to" label="Até" />
+                  <Datepicker name="date" label="Período" />
                   <Select
                     name="frequency"
                     label="Visualizar por:"
@@ -160,7 +154,7 @@ export default function Home() {
                   />
                 </PeriodContainer>
               )}
-              <Input name="paymentMethod" label="Por Método de Pagamento" />
+              <Checkbox name="paymentMethod" label="Por Método de Pagamento" />
             </Scope>
           </fieldset>
 
@@ -168,8 +162,8 @@ export default function Home() {
             <legend>Preferência dos Clientes</legend>
 
             <Scope path="preference">
-              <Input name="paymentMethod" label="Por Meios de Pagamento" />
-              <Input name="sendingMethod" label="Por Meios de Envio" />
+              <Checkbox name="paymentMethod" label="Por Meios de Pagamento" />
+              <Checkbox name="sendingMethod" label="Por Meios de Envio" />
             </Scope>
           </fieldset>
 
@@ -182,7 +176,10 @@ export default function Home() {
               <FileList />
             </FileContextProvider>
           </fieldset>
-          <button type="submit">Enviar</button>
+
+          <footer>
+            <Button type="submit">Enviar</Button>
+          </footer>
         </Form>
       </main>
     </Container>

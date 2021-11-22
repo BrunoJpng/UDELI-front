@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import ReactSelect, { Props as ReactSelectProps } from 'react-select';
+import ReactSelect, { Props } from 'react-select';
 import { useField } from '@unform/core';
 
 type OptionProps = {
@@ -7,10 +7,9 @@ type OptionProps = {
   label: string;
 }
 
-type SelectProps = ReactSelectProps & {
+type SelectProps = Props<OptionProps> & {
   name: string;
   label: string;
-  options: Array<OptionProps>
 }
 
 export function Select({label, name, options, ...rest}: SelectProps) {
@@ -23,20 +22,15 @@ export function Select({label, name, options, ...rest}: SelectProps) {
       ref: selectRef.current,
       getValue: (ref: any) => {
         if (rest.isMulti) {
-          if (ref.state.selectValue.length === 0) {
+          if (!ref.props.value) {
             return [];
           }
-
-          return ref.state.selectValue.map((option: OptionProps) => {
-            return option.value
-          });
+          return ref.props.value.map((option: OptionProps) => option.value);
         }
-
-        if (ref.state.selectValue.length === 0) {
+        if (!ref.props.value) {
           return '';
         }
-
-        return ref.state.selectValue[0].value;
+        return ref.props.value.value;
       }
     })
   }, [fieldName, registerField, rest.isMulti]);
@@ -50,6 +44,7 @@ export function Select({label, name, options, ...rest}: SelectProps) {
         defaultValue={defaultValue}
         options={options}
         classNamePrefix="react-select"
+        placeholder="Selecione a frequência"
         {...rest}
       />
 

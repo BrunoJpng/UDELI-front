@@ -24,11 +24,47 @@ export const Container = styled.div`
       border-bottom: 1px solid #e6e6f0;
     }
   }
+
+  footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2.4rem;
+  }
 `;
 
-export const PeriodContainer = styled.div`
+export const PeriodContainer = styled.section`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 1rem;
   align-items: center;
+  margin-top: 1.4rem;
+  gap: 1rem;
+
+  label {
+    font-size: 1.2rem;
+    padding-bottom: 3rem;
+  }
+
+  @media(min-width: 780px) {
+    grid-template-columns: 1fr 1fr;
+  }
+`;
+
+export const Button = styled.button`
+  width: 20rem;
+  height: 5.6rem;
+
+  background: #04D361;
+  color: #FFFFFF;
+  font: 700 1.6rem Archivo;
+
+  border: 0;
+  border-radius: 0.8rem;
+
+  cursor: pointer;
+
+  transition: background-color 0.2s;
+
+  &:hover {
+    background: #04bf58;
+  }
 `;

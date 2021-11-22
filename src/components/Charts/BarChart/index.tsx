@@ -9,7 +9,7 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 
-export function BarChart({ data }) {
+export function BarChart({ data, label }) {
   return (
     <ResponsiveContainer minHeight={400} minWidth={800}>
       <BarRechart 
@@ -22,11 +22,18 @@ export function BarChart({ data }) {
         }}
       >
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
+        <XAxis dataKey="name" interval={0} />
         <YAxis />
         <Tooltip />
         <Legend />
-        <Bar dataKey="value" name="Número de pedidos" fill="#8884d8" />
+        {label === "Preferência por método de pagamento" ? (
+          <>
+            <Bar dataKey="value.usos" name="Usos" fill="#8884d8" />
+            <Bar dataKey="value.aprovados" name="Aprovados" fill="#82ca9d" />
+          </>
+        ) : (
+          <Bar dataKey="value" name="pedidos" fill="#8884d8" />
+        )}
       </BarRechart>
     </ResponsiveContainer>
   );

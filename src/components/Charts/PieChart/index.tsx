@@ -6,14 +6,7 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 
-type PieChartProps = {
-  data: Array<{
-    name: string;
-    value: number;
-  }>
-}
-
-export function PieChart({ data }: PieChartProps) {
+export function PieChart({ data }) {
   const colors = ['#03bb85', '#e57878', '#8884d8', '#ff8042', '#ffbb28', '#8257e5']
   const RADIAN = Math.PI / 180;
   const renderLabel = ({
@@ -58,8 +51,8 @@ export function PieChart({ data }: PieChartProps) {
       <PieRechart>
         <Pie
           data={data}
-          cx={200}
-          cy={200}
+          cx='50%'
+          cy='50%'
           dataKey="value"
           label={renderLabel}
           labelLine={false}

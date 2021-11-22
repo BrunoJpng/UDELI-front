@@ -16,30 +16,34 @@ export const Container = styled.div`
 
     @media(min-width: 700px) {
       grid-template-columns: 1fr 1fr;
-
-      > div.landscape {
-        grid-column-end: span 2;
-      }
     }
   }
 
-  /* @media(min-width: 1100px) {
-    display: grid;
-    gap: 1rem;
-    grid-template-columns: repeat(3, 1fr);
-  
-    > div {
-      display: flex;
-      margin-bottom: 1rem;
-      break-inside: avoid;
-  
-      &.landscape1 {
-        grid-column-end: span 2;
-      }
-      
-      &.landscape2 {
-        grid-column-end: span 3;
-      }
-    } 
-  } */
+  .custom-tooltip {
+    background: #fff;
+    padding: 2rem;
+    text-align: initial;
+    border: 1px solid #cccccc;
+  }
+`;
+
+export const ChartContainer = styled.div`
+  width: 100%;
+  background: #FFF;
+  text-align: center;
+
+  padding: 1rem;
+  border: 1px solid #bbb;
+  border-radius: 8px;
+
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  &.landscape {
+    grid-column-end: span 2;
+  }
+
+  h2 {
+    margin-bottom: 1.5rem;
+  }
 `;

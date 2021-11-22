@@ -3,12 +3,12 @@ import { useField } from '@unform/core';
 
 import { Container } from './styles';
 
-type InputProps = InputHTMLAttributes<HTMLInputElement> & {
+type CheckboxProps = InputHTMLAttributes<HTMLInputElement> & {
   name: string;
   label: string;
 }
 
-export function Input({ label, name, ...rest }: InputProps) {
+export function Checkbox({ label, name, ...rest }: CheckboxProps) {
   const inputRef = useRef(null);
   const { fieldName, registerField, defaultValue, error } = useField(name);
 
