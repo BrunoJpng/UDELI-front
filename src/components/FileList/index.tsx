@@ -1,13 +1,16 @@
+import { CircularProgressbar } from "react-circular-progressbar";
+import { MdCheckCircle, MdError } from "react-icons/md";
+
 import { useFiles } from '../../hooks/useFiles';
 
 import { Container, FileInfo } from './styles';
 
 export function FileList() {
-  const { uploadedFiles, deleteFile } = useFiles();
+  const { uploadedFiles: files, deleteFile } = useFiles();
 
   return (
     <Container>
-      {uploadedFiles.map(file => (
+      {files.map(file => (
         <li key={file.id}>
           <FileInfo>
             <div>
@@ -18,6 +21,23 @@ export function FileList() {
               </span>
             </div>
           </FileInfo>
+
+          <div>
+            {!file.uploaded && !file.error && (
+              <CircularProgressbar 
+                styles={{
+                  root: { width: 24 },
+                  path: { stroke: "#7159c1"}
+                }}
+                strokeWidth={10}
+                text={String(file.progress)}
+                value={file.progress || 0}
+              />
+            )}
+
+            {file.uploaded && <MdCheckCircle size={24} color="#78e5d5" />}
+            {file.error && <MdError size={24} color="#e57878" />}
+          </div>
         </li>
       ))}
     </Container>

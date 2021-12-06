@@ -1,36 +1,45 @@
+import { GetServerSideProps } from "next";
 import { BarChart, LineChart, PieChart } from "../components/Charts";
-
-// import { useData } from "../hooks/useData";
 
 import { Container, ChartContainer } from "../styles/pages/Resultado";
 
-import data from "../../data.json"
+import { api } from "../services/api";
 
-export default function Resultado() {
-  // const { data } = useData();
-
+export default function Resultado({ data }) {
   return (
     <Container>
       <main>
-        {Object.entries(data).map(entry => {
-          const [key, value] = entry;
-          const isLineChart = key.toLowerCase().includes('período');
-          const isPieChart = data[key].length <= 6 && key !== "Preferência por método de pagamento"
-          const landscape = isLineChart || !isPieChart
+        {data.map(current => {
+          const formattedData = Object.entries(current.result).map(entry => {
+            const [name, value] = entry;
+            return { name, value }
+          });
 
           return (
-            <ChartContainer key={key} className={landscape && "landscape"}>
-              <h2>{key}</h2>
-              {isLineChart 
-              ? <LineChart data={value} label={key} /> 
-              : (isPieChart 
-                ? <PieChart data={value} /> 
-                : <BarChart data={value} label={key} />
-              )}
+            <ChartContainer key={current.title} className={current.chart !== 'pie' && 'landscape'}>
+              <h2>{current.title}</h2>
+              {current.chart === 'bar' && <BarChart data={formattedData} label={current.title} />}
+              {current.chart === 'pie' && <PieChart data={formattedData} />}
+              {current.chart === 'line' && <LineChart data={formattedData} label={current.title} />}
             </ChartContainer>
-          );
+          )
         })}
       </main>
     </Container>
   );
+}
+
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+  const { data } = await api.get('/analysis', { 
+    // withCredentials: true,
+    // headers: {
+    //   Cookie: req.headers.cookie
+    // }
+  })
+
+  return {
+    props: {
+      data
+    }
+  }
 }

@@ -1,407 +1,214 @@
 {
-  "Pedidos por estado": [
-    {
-      "name": "SP",
-      "value": 334
-    },
-    {
-      "name": "PB",
-      "value": 314
-    },
-    {
-      "name": "RJ",
-      "value": 110
-    },
-    {
-      "name": "MG",
-      "value": 99
-    },
-    {
-      "name": "PE",
-      "value": 83
-    },
-    {
-      "name": "PR",
-      "value": 75
-    },
-    {
-      "name": "SC",
-      "value": 47
-    },
-    {
-      "name": "BA",
-      "value": 40
-    },
-    {
-      "name": "CE",
-      "value": 36
-    },
-    {
-      "name": "RS",
-      "value": 34
-    },
-    {
-      "name": "AL",
-      "value": 34
-    },
-    {
-      "name": "GO",
-      "value": 31
-    },
-    {
-      "name": "PA",
-      "value": 27
-    },
-    {
-      "name": "RN",
-      "value": 26
-    },
-    {
-      "name": "DF",
-      "value": 26
-    },
-    {
-      "name": "SE",
-      "value": 22
-    },
-    {
-      "name": "PI",
-      "value": 18
-    },
-    {
-      "name": "AM",
-      "value": 17
-    },
-    {
-      "name": "MA",
-      "value": 15
-    },
-    {
-      "name": "MS",
-      "value": 14
-    },
-    {
-      "name": "MT",
-      "value": 10
-    },
-    {
-      "name": "ES",
-      "value": 9
-    },
-    {
-      "name": "RO",
-      "value": 6
-    },
-    {
-      "name": "TO",
-      "value": 4
-    },
-    {
-      "name": "AP",
-      "value": 1
-    }
-  ],
-  "Pedidos por cidade": [
-    {
-      "name": "Campina Grande",
-      "value": 212
-    },
-    {
-      "name": "São Paulo",
-      "value": 132
-    },
-    {
-      "name": "João Pessoa",
-      "value": 67
-    },
-    {
-      "name": "Rio de Janeiro",
-      "value": 63
-    },
-    {
-      "name": "Recife",
-      "value": 33
-    },
-    {
-      "name": "Curitiba",
-      "value": 31
-    },
-    {
-      "name": "Belo Horizonte",
-      "value": 30
-    },
-    {
-      "name": "Maceió",
-      "value": 28
-    },
-    {
-      "name": "Brasília",
-      "value": 26
-    },
-    {
-      "name": "Fortaleza",
-      "value": 19
-    }
-  ],
-  "Clientes reincidentes": [
-    {
-      "name": "Clientes novos",
-      "value": 693
-    },
-    {
-      "name": "Clientes reincidentes",
-      "value": 255
-    }
-  ],
-  "Gênero dos clientes": [
-    {
-      "name": "Mulheres",
-      "value": 71
-    },
-    {
-      "name": "Homens",
-      "value": 22
-    }
-  ],
-  "Faixa Etária": [
-    {
-      "name": "20-24",
-      "value": 443
-    },
-    {
-      "name": "35-39",
-      "value": 63
-    },
-    {
-      "name": "25-29",
-      "value": 231
-    },
-    {
-      "name": "15-19",
-      "value": 152
-    },
-    {
-      "name": "50-54",
-      "value": 13
-    },
-    {
-      "name": "40-44",
-      "value": 35
-    },
-    {
-      "name": "30-34",
-      "value": 82
-    },
-    {
-      "name": "45-49",
-      "value": 21
-    },
-    {
-      "name": "55-59",
-      "value": 6
-    },
-    {
-      "name": "10-14",
-      "value": 3
-    },
-    {
-      "name": "65-69",
-      "value": 1
-    },
-    {
-      "name": "60-64",
-      "value": 2
-    },
-    {
-      "name": "0-4",
-      "value": 1
-    },
-    {
-      "name": "70-74",
-      "value": 1
-    },
-    {
-      "name": "120-124",
-      "value": 1
-    }
-  ],
-  "Períodos com mais cadastros": [
-    {
-      "name": "2020-01",
-      "value": 69
-    },
-    {
-      "name": "2020-02",
-      "value": 43
-    },
-    {
-      "name": "2020-03",
-      "value": 49
-    },
-    {
-      "name": "2020-04",
-      "value": 89
-    },
-    {
-      "name": "2020-05",
-      "value": 116
-    },
-    {
-      "name": "2020-06",
-      "value": 79
-    },
-    {
-      "name": "2020-07",
-      "value": 48
-    },
-    {
-      "name": "2020-08",
-      "value": 43
-    },
-    {
-      "name": "2020-09",
-      "value": 48
-    },
-    {
-      "name": "2020-10",
-      "value": 47
-    },
-    {
-      "name": "2020-11",
-      "value": 38
-    },
-    {
-      "name": "2020-12",
-      "value": 27
-    },
-    {
-      "name": "2021-01",
-      "value": 15
-    },
-    {
-      "name": "2021-02",
-      "value": 13
-    },
-    {
-      "name": "2021-03",
-      "value": 25
-    },
-    {
-      "name": "2021-04",
-      "value": 16
-    },
-    {
-      "name": "2021-05",
-      "value": 17
-    }
-  ],
-  "Faturamento por período": [
-    {
-      "name": "2019",
-      "value": 13165.5
-    },
-    {
-      "name": "2020",
-      "value": 45180.55
-    },
-    {
-      "name": "2021",
-      "value": 9050.669999999996
-    }
-  ],
-  "Cancelamentos por período": [
-    {"name": "2021-01-06", "value": 9},
-    {"name": "2021-01-21", "value": 3},
-    {"name": "2021-01-23", "value": 1},
-    {"name": "2021-02-03", "value": 1},
-    {"name": "2021-02-06", "value": 1},
-    {"name": "2021-02-12", "value": 2},
-    {"name": "2021-02-14", "value": 4},
-    {"name": "2021-02-22", "value": 1},
-    {"name": "2021-02-25", "value": 1},
-    {"name": "2021-02-26", "value": 1},
-    {"name": "2021-03-05", "value": 1},
-    {"name": "2021-03-10", "value": 2},
-    {"name": "2021-03-11", "value": 1},
-    {"name": "2021-03-18", "value": 1},
-    {"name": "2021-03-19", "value": 1},
-    {"name": "2021-03-22", "value": 1},
-    {"name": "2021-03-24", "value": 1},
-    {"name": "2021-04-05", "value": 1},
-    {"name": "2021-04-13", "value": 1},
-    {"name": "2021-04-14", "value": 1},
-    {"name": "2021-04-23", "value": 1},
-    {"name": "2021-04-25", "value": 1},
-    {"name": "2021-04-27", "value": 1},
-    {"name": "2021-05-03", "value": 1},
-    {"name": "2021-05-07", "value": 2},
-    {"name": "2021-05-09", "value": 1},
-    {"name": "2021-05-11", "value": 7},
-    {"name": "2021-05-12", "value": 2},
-    {"name": "2021-05-13", "value": 2},
-    {"name": "2021-05-14", "value": 1},
-    {"name": "2021-05-15", "value": 1},
-    {"name": "2021-05-17", "value": 1},
-    {"name": "2021-05-25", "value": 1},
-    {"name": "2021-05-27", "value": 1},
-    {"name": "2021-06-07", "value": 1},
-    {"name": "2021-06-08", "value": 1},
-    {"name": "2021-06-12", "value": 1},
-    {"name": "2021-06-28", "value": 1},
-    {"name": "2021-07-08", "value": 1},
-    {"name": "2021-07-09", "value": 1},
-    {"name": "2021-07-10", "value": 1},
-    {"name": "2021-07-11", "value": 1},
-    {"name": "2021-07-12", "value": 5},
-    {"name": "2021-07-13", "value": 1}
-  ],
-  "Preferência por método de pagamento": [
-    {
-      "name": "MercadoPago V1",
-      "value": {
-        "usos": 764,
-        "aprovados": 462
+  "analysis": [
+    {
+      "title": "Quantidade de pedidos por estado",
+      "chart": "bar",
+      "result": {
+        "SP": 334,
+        "PB": 314,
+        "RJ": 110,
+        "MG": 99,
+        "PE": 83,
+        "PR": 75,
+        "SC": 47,
+        "BA": 40,
+        "CE": 36,
+        "RS": 34,
+        "AL": 34,
+        "GO": 31,
+        "PA": 27,
+        "RN": 26,
+        "DF": 26,
+        "SE": 22,
+        "PI": 18,
+        "AM": 17,
+        "MA": 15,
+        "MS": 14,
+        "MT": 10,
+        "ES": 9,
+        "RO": 6,
+        "TO": 4,
+        "AP": 1
       }
     },
     {
-      "name": "MercadoPago Boleto",
-      "value": {
-        "usos": 652,
-        "aprovados": 339
+      "title": "10 cidades com mais pedidos",
+      "chart": "bar",
+      "result": {
+        "Campina Grande": 212,
+        "São Paulo": 132,
+        "João Pessoa": 67,
+        "Rio de Janeiro": 63,
+        "Recife": 33,
+        "Curitiba": 31,
+        "Belo Horizonte": 30,
+        "Maceió": 28,
+        "Brasília": 26,
+        "Fortaleza": 19
       }
     },
     {
-      "name": "Pagamento na entrega",
-      "value": {
-        "usos": 16,
-        "aprovados": 10
+      "title": "Taxa de reincidência",
+      "chart": "pie",
+      "result": {
+        "Clientes que fizeram apenas 1 compra": 693,
+        "Clientes que voltaram a comprar": 255
       }
-    }
-  ],
-  "Preferência por método de envio": [
-    {
-      "name": "Retirar pessoalmente",
-      "value": 43
     },
     {
-      "name": "PAC",
-      "value": 748
+      "title": "Gênero dos clientes",
+      "chart": "pie",
+      "result": {
+        "Mulheres": 85,
+        "Homens": 28
+      }
     },
     {
-      "name": "SEDEX",
-      "value": 8
+      "title": "Faixa Etária",
+      "chart": "bar",
+      "result": {
+        "20-24": 441,
+        "35-39": 64,
+        "25-29": 233,
+        "15-19": 152,
+        "50-54": 13,
+        "40-44": 35,
+        "30-34": 82,
+        "45-49": 21,
+        "55-59": 6,
+        "10-14": 2,
+        "65-69": 1,
+        "60-64": 2,
+        "0-4": 1,
+        "70-74": 1,
+        "120-124": 1
+      }
     },
     {
-      "name": "Transportadora",
-      "value": 9
+      "title": "Cadastros por período",
+      "chart": "line",
+      "result": {
+        "2019-06": 11,
+        "2019-07": 21,
+        "2019-08": 18,
+        "2019-09": 39,
+        "2019-10": 27,
+        "2019-11": 73,
+        "2019-12": 58,
+        "2020-01": 69,
+        "2020-02": 43,
+        "2020-03": 49,
+        "2020-04": 89,
+        "2020-05": 116,
+        "2020-06": 79,
+        "2020-07": 48,
+        "2020-08": 43,
+        "2020-09": 48,
+        "2020-10": 47,
+        "2020-11": 38,
+        "2020-12": 27,
+        "2021-01": 15,
+        "2021-02": 13,
+        "2021-03": 25,
+        "2021-04": 16,
+        "2021-05": 17,
+        "2021-06": 14,
+        "2021-07": 12
+      }
     },
     {
-      "name": "Melhor Envio",
-      "value": 2
+      "title": "Faturamento por período",
+      "chart": "line",
+      "result": {
+        "2019-06": 539.0,
+        "2019-07": 1065.0,
+        "2019-08": 660.0,
+        "2019-09": 2075.55,
+        "2019-10": 1322.5,
+        "2019-11": 4092.95,
+        "2019-12": 3410.5,
+        "2020-01": 3630.0,
+        "2020-02": 3212.0,
+        "2020-03": 2600.0,
+        "2020-04": 4380.75,
+        "2020-05": 9375.25,
+        "2020-06": 4353.25,
+        "2020-07": 2762.0,
+        "2020-08": 3086.25,
+        "2020-09": 3940.75,
+        "2020-10": 3167.5,
+        "2020-11": 2590.8,
+        "2020-12": 2082.0,
+        "2021-01": 1159.5,
+        "2021-02": 1123.75,
+        "2021-03": 2201.0,
+        "2021-04": 1508.5,
+        "2021-05": 1214.8,
+        "2021-06": 1106.65,
+        "2021-07": 736.47
+      }
     },
     {
-      "name": "Motoboy",
-      "value": 1
+      "title": "Cancelamentos por período",
+      "chart": "line",
+      "result": {
+        "2019-06": 3,
+        "2019-07": 13,
+        "2019-08": 11,
+        "2019-09": 34,
+        "2019-10": 12,
+        "2019-11": 37,
+        "2019-12": 24,
+        "2020-01": 31,
+        "2020-02": 29,
+        "2020-03": 24,
+        "2020-04": 65,
+        "2020-05": 55,
+        "2020-06": 41,
+        "2020-07": 23,
+        "2020-08": 34,
+        "2020-09": 24,
+        "2020-10": 31,
+        "2020-11": 11,
+        "2020-12": 22,
+        "2021-01": 13,
+        "2021-02": 11,
+        "2021-03": 8,
+        "2021-04": 6,
+        "2021-05": 20,
+        "2021-06": 4,
+        "2021-07": 10
+      }
+    },
+    {
+      "title": "Preferência por método de pagamento",
+      "chart": "bar",
+      "result": {
+        "MercadoPago Boleto": {
+          "usos": 652,
+          "aprovados": 339
+        },
+        "MercadoPago V1": {
+          "usos": 764,
+          "aprovados": 462
+        },
+        "Pagamento na entrega": {
+          "usos": 16,
+          "aprovados": 10
+        }
+      }
+    },
+    {
+      "title": "Preferência por método de envio",
+      "chart": "pie",
+      "result": {
+        "Retirar pessoalmente": 43,
+        "PAC": 748,
+        "SEDEX": 8,
+        "Transportadora": 9,
+        "Melhor Envio": 2,
+        "Motoboy": 1
+      }
     }
   ]
 }

@@ -16,7 +16,7 @@ type DropzoneRefProps = HTMLInputElement & {
 
 export function Dropzone({ name }: DropzoneProps) {
   const dropzoneRef = useRef<DropzoneRefProps>(null);
-  const { fieldName, registerField, defaultValue = [] } = useField(name);
+  // const { fieldName, registerField, defaultValue = [] } = useField(name);
   const { uploadedFiles, handleUpload } = useFiles();
 
   useEffect(() => {
@@ -25,21 +25,21 @@ export function Dropzone({ name }: DropzoneProps) {
     }
   }, [uploadedFiles]);
 
-  useEffect(() => {
-    registerField({
-      name: fieldName,
-      ref: dropzoneRef.current,
-      getValue: (ref: DropzoneRefProps) => {
-        return ref.acceptedFiles || [];
-      },
-      clearValue: (ref: DropzoneRefProps) => {
-        ref.acceptedFiles = [];
-      },
-      setValue: (ref: DropzoneRefProps, value) => {
-        ref.acceptedFiles = value;
-      }
-    });
-  }, [fieldName, registerField]);
+  // useEffect(() => {
+  //   registerField({
+  //     name: fieldName,
+  //     ref: dropzoneRef.current,
+  //     getValue: (ref: DropzoneRefProps) => {
+  //       return ref.acceptedFiles || [];
+  //     },
+  //     clearValue: (ref: DropzoneRefProps) => {
+  //       ref.acceptedFiles = [];
+  //     },
+  //     setValue: (ref: DropzoneRefProps, value) => {
+  //       ref.acceptedFiles = value;
+  //     }
+  //   });
+  // }, [fieldName, registerField]);
 
   const { getInputProps, getRootProps, isDragActive,  isDragReject } = useDropzone({
     accept: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",

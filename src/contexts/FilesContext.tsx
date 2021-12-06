@@ -1,31 +1,67 @@
-import { createContext, useState, ReactNode } from "react";
+import { createContext, useState, useCallback, ReactNode } from "react";
 import { v4 as uuidv4 } from "uuid";
 import filesize from "filesize";
 
-type FileProps = {
+import { api } from "../services/api";
+
+type IFile = {
   id: string;
   name: string;
   readableSize: string;
+  uploaded?: boolean;
+  // preview: string;
   file: File | null;
+  progress?: number;
+  error?: boolean;
+  // url: string;
 }
 
-type FileContextData = {
-  uploadedFiles: FileProps[];
+type IFileContextData = {
+  uploadedFiles: IFile[];
   deleteFile: (id: string) => void;
   handleUpload: (files: File[]) => void;
 }
 
-type FileContextProviderProps = {
+type IFileContextProvider = {
   children: ReactNode;
 }
 
-export const FileContext = createContext({} as FileContextData);
+export const FileContext = createContext({} as IFileContextData);
 
-export function FileContextProvider({children}: FileContextProviderProps) {
-  const [uploadedFiles, setUploadedFiles] = useState<FileProps[]>([]);
+export function FileContextProvider({ children }: IFileContextProvider) {
+  const [uploadedFiles, setUploadedFiles] = useState<IFile[]>([]);
 
-  const handleUpload = (files: File[]) => {
-    const newUploadedFiles = files.map(file => ({
+  const updateFile = useCallback((id, data) => {
+    setUploadedFiles(state => 
+      state.map(file => (file.id === id ? { ...file, ...data } : file))
+    );
+  }, []);
+
+  const processUpload = useCallback((uploadedFile: IFile) => {
+    const data = new FormData();
+
+    if (uploadedFile.file) {
+      data.append("file", uploadedFile.file, uploadedFile.name);
+    }
+
+    api.post("/upload_file", data, {
+      onUploadProgress: (progressEvent) => {
+        let progress = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+
+        console.log(`O arquivo ${uploadedFile.name} está ${progress}% carregado...`);
+
+        updateFile(uploadedFile.id, { progress });
+      }
+    }).then(() => {
+      console.log(`O arquivo ${uploadedFile.name} já foi enviado para o servidor!`);
+      updateFile(uploadedFile.id, { uploaded: true });
+    }).catch(() => {
+      updateFile(uploadedFile.id, { error: true })
+    })
+  }, [updateFile]);
+
+  const handleUpload = useCallback((files: File[]) => {
+    const newUploadedFiles: IFile[] = files.map(file => ({
       file,
       id: uuidv4(),
       name: file.name,
@@ -36,9 +72,11 @@ export function FileContextProvider({children}: FileContextProviderProps) {
     }));
 
     setUploadedFiles(uploadedFiles.concat(newUploadedFiles));
-  };
+    newUploadedFiles.forEach(processUpload);
+  }, [processUpload, uploadedFiles]);
 
   const deleteFile = (id: string) => {
+    api.delete(`upload/${id}`)
     setUploadedFiles(state => state.filter(file => file.id !== id));
   };
   
