@@ -74,7 +74,7 @@ export function LineChart({ data, label }) {
   };
 
   return (
-    <ResponsiveContainer minHeight={400} minWidth={800}>
+    <ResponsiveContainer height={500} width="100%">
       <LineRechart data={data} margin={{ bottom: 20, right: 20 }}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="name" tickFormatter={tickFormatter} interval={0} />

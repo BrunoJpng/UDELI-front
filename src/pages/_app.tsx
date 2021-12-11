@@ -1,14 +1,14 @@
 import { AppProps } from 'next/app'
-import { DataContextProvider } from '../contexts/DataContext';
+import { ChakraProvider, CSSReset } from '@chakra-ui/react';
 
-import GlobalStyle from '../styles/global';
+import { theme } from '../styles/theme';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <DataContextProvider>
+    <ChakraProvider theme={theme}>
       <Component {...pageProps} />
-      <GlobalStyle />
-    </DataContextProvider>
+      <CSSReset />
+    </ChakraProvider>
   );
 }
 

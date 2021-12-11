@@ -52,8 +52,9 @@ export function FileContextProvider({ children }: IFileContextProvider) {
 
         updateFile(uploadedFile.id, { progress });
       }
-    }).then(() => {
+    }).then((response) => {
       console.log(`O arquivo ${uploadedFile.name} já foi enviado para o servidor!`);
+      console.log(response.headers)
       updateFile(uploadedFile.id, { uploaded: true });
     }).catch(() => {
       updateFile(uploadedFile.id, { error: true })

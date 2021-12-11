@@ -47,7 +47,7 @@ export function PieChart({ data }) {
   };
 
   return (
-    <ResponsiveContainer minHeight={400} minWidth={300}>
+    <ResponsiveContainer height={500} width="100%">
       <PieRechart>
         <Pie
           data={data}

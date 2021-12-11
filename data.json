@@ -1,8 +1,8 @@
 {
-  "analysis": [
+  "data": [
     {
       "title": "Quantidade de pedidos por estado",
-      "chart": "bar",
+      "chart": "map",
       "result": {
         "SP": 334,
         "PB": 314,
@@ -33,7 +33,7 @@
     },
     {
       "title": "10 cidades com mais pedidos",
-      "chart": "bar",
+      "chart": "horizontalBar",
       "result": {
         "Campina Grande": 212,
         "São Paulo": 132,
@@ -178,24 +178,6 @@
         "2021-05": 20,
         "2021-06": 4,
         "2021-07": 10
-      }
-    },
-    {
-      "title": "Preferência por método de pagamento",
-      "chart": "bar",
-      "result": {
-        "MercadoPago Boleto": {
-          "usos": 652,
-          "aprovados": 339
-        },
-        "MercadoPago V1": {
-          "usos": 764,
-          "aprovados": 462
-        },
-        "Pagamento na entrega": {
-          "usos": 16,
-          "aprovados": 10
-        }
       }
     },
     {
