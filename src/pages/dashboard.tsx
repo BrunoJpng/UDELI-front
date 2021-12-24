@@ -27,12 +27,10 @@ type IFormattedData = Array<{
   value: number;
 }>
 
-export default function Resultado({ analysis }: IAnalysisList) {
+export default function Dashboard({ analysis }: IAnalysisList) {
   return (
     <Grid
       as="main"
-      // height="100%"
-      // width="100vw"
       padding={8}
       gap={4}
       backgroundColor="gray.100"
@@ -42,7 +40,7 @@ export default function Resultado({ analysis }: IAnalysisList) {
       }}
     >
       <Head>
-        <title>Udeli | Resultado</title>
+        <title>Udeli | Dashboard</title>
       </Head>
       
       {analysis.map(current => {

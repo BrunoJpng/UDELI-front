@@ -50,7 +50,7 @@ export function LineChart({ data, label }) {
     return null;
   }
 
-  const CustomTooltip = (tooltipProps) => {
+  const customTooltip = (tooltipProps) => {
     const { active, payload, label } = tooltipProps;
     
     if (active && payload && payload.length) {
