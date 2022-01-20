@@ -1,45 +1,63 @@
-import { CircularProgressbar } from "react-circular-progressbar";
 import { MdCheckCircle, MdError } from "react-icons/md";
+import {
+  List,
+  ListItem,
+  Flex,
+  CircularProgress,
+  CircularProgressLabel,
+  chakra
+} from '@chakra-ui/react';
 
 import { useFiles } from '../../hooks/useFiles';
-
-import { Container, FileInfo } from './styles';
 
 export function FileList() {
   const { uploadedFiles: files, deleteFile } = useFiles();
 
   return (
-    <Container>
+    <List marginTop="20px">
       {files.map(file => (
-        <li key={file.id}>
-          <FileInfo>
-            <div>
+        <ListItem 
+          key={file.id} 
+          display="flex"
+          justifyContent="space-between"
+          alignItems="center"
+          color="gray.700"
+          _notFirst={{ marginTop: 4 }}
+        >
+          <Flex alignItems="center">
+            <Flex flexDirection="column">
               <strong>{file.name}</strong>
-              <span>
+              <chakra.span
+                fontSize="12px"
+                color="gray.600"
+                marginTop="5px"              
+              >
                 {file.readableSize}
-                <button type="button" onClick={() => deleteFile(file.id)}>Excluir</button>
-              </span>
-            </div>
-          </FileInfo>
+                <chakra.button
+                  type="button"
+                  background="transparent"
+                  color="red.400"
+                  marginLeft="5px"
+                  onClick={() => deleteFile(file.id)}
+                >
+                  Excluir
+                </chakra.button>
+              </chakra.span>
+            </Flex>
+          </Flex>
 
           <div>
             {!file.uploaded && !file.error && (
-              <CircularProgressbar 
-                styles={{
-                  root: { width: 24 },
-                  path: { stroke: "#7159c1"}
-                }}
-                strokeWidth={10}
-                text={String(file.progress)}
-                value={file.progress || 0}
-              />
+              <CircularProgress value={file.progress || 0} size="24px">
+                <CircularProgressLabel>{file.progress}</CircularProgressLabel>
+              </CircularProgress>
             )}
 
             {file.uploaded && <MdCheckCircle size={24} color="#78e5d5" />}
             {file.error && <MdError size={24} color="#e57878" />}
           </div>
-        </li>
+        </ListItem>
       ))}
-    </Container>
+    </List>
   );
 }

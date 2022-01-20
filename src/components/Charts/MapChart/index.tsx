@@ -11,10 +11,10 @@ type MapChartProps = {
   data: Array<{
     name: string;
     value: number;
-  }>
+  }>;
 }
 
-const geoUrl = "https://gist.githubusercontent.com/ruliana/1ccaaab05ea113b0dff3b22be3b4d637/raw/196c0332d38cb935cfca227d28f7cecfa70b412e/br-states.json";
+const geoUrl = "https://raw.githubusercontent.com/fititnt/gis-dataset-brasil/master/uf/topojson/uf.json";
 
 const colorScale = scaleLinear<string>()
   .domain([0, 114.6])
@@ -38,31 +38,28 @@ export function MapChart({ data }: MapChartProps) {
         {({ geographies }) => (
           <>
             {geographies.map(geography => {
+              const centroid = geoCentroid(geography);
               const state = data.find(state => state.name === geography.id);
               return (
-                <Geography
-                  key={geography.rsmKey}
-                  stroke="#666"
-                  geography={geography}
-                  fill={colorScale(state ? state.value : 0)}
-                  onClick={() => console.log(state.value)}
-                />
+                <>
+                  <Geography
+                    key={geography.rsmKey}
+                    stroke="#666"
+                    geography={geography}
+                    fill={colorScale(state ? state.value : 0)}
+                    onMouseEnter={() => console.log(state?.name)}
+                  />
+                  <g key={geography.rsmKey + "-name"}>
+                    {state &&
+                      <Marker coordinates={centroid}>
+                        <text y="2" fontSize={14} textAnchor="middle">
+                          {state.name}
+                        </text>
+                      </Marker>
+                    }
+                  </g>
+                </>
               )
-            })}
-            {geographies.map(geography => {
-              const centroid = geoCentroid(geography);
-              const cur = data.find(state => state.name === geography.id);
-              return (
-                <g key={geography.rsmKey + "-name"}>
-                  {cur &&
-                    <Marker coordinates={centroid}>
-                      <text y="2" fontSize={14} textAnchor="middle">
-                        {cur.name}
-                      </text>
-                    </Marker>
-                  }
-                </g>
-              );
             })}
           </>
         )}

@@ -4,7 +4,6 @@ import { useField } from '@unform/core';
 import ptBR from 'date-fns/locale/pt-BR';
 
 import 'react-datepicker/dist/react-datepicker.css'
-import { Container } from './styles';
 
 type DatepickerProps = Omit<ReactDatePickerProps, 'onChange'> & {
   name: string;
@@ -34,7 +33,7 @@ export function Datepicker({ label, name, ...rest }: DatepickerProps) {
   }, [fieldName, registerField]);
 
   return (
-    <Container>
+    <div>
       <label htmlFor={fieldName}>{label}</label>
       <ReactDatepicker
         id={fieldName}
@@ -52,6 +51,6 @@ export function Datepicker({ label, name, ...rest }: DatepickerProps) {
         withPortal
         {...rest}
       />
-    </Container>
+    </div>
   );
 }

@@ -1,6 +1,9 @@
 import { GetServerSideProps } from "next";
 import Head from 'next/head';
-import { Flex, Grid, GridItem } from "@chakra-ui/react";
+import { useCallback, useState } from "react";
+import { Flex, Grid } from "@chakra-ui/react";
+
+import update from 'immutability-helper';
 
 import { 
   BarChart, 
@@ -8,18 +11,19 @@ import {
   PieChart, 
   MapChart 
 } from "../components/Charts";
+import { DragCard } from "../components/DragCard";
 import { Table } from "../components/Table";
 
 import { api } from "../services/api";
 
-type IAnalysis = {
+type Analysis = {
   title: string;
   chart: string;
   result: object;
 };
 
-type IAnalysisList = {
-  analysis: Array<IAnalysis>;
+type DashboardProps = {
+  data: Analysis[];
 }
 
 type IFormattedData = Array<{
@@ -27,7 +31,23 @@ type IFormattedData = Array<{
   value: number;
 }>
 
-export default function Dashboard({ analysis }: IAnalysisList) {
+export default function Dashboard({ data }: DashboardProps) {
+  const [charts, setCharts] = useState(data);
+
+  const moveCard = useCallback((dragIndex: number, hoverIndex: number) => {
+    const dragCard = charts[dragIndex];
+    setCharts(update(charts, {
+      $splice: [
+        [dragIndex, 1],
+        [hoverIndex, 0, dragCard]
+      ],
+    }));
+  }, [charts]);
+
+  const removeChart = (id: string) => {
+    setCharts(state => state.filter(chart => chart.title !== id));
+  }
+
   return (
     <Grid
       as="main"
@@ -43,25 +63,21 @@ export default function Dashboard({ analysis }: IAnalysisList) {
         <title>Udeli | Dashboard</title>
       </Head>
       
-      {analysis.map(current => {
+      {charts.map((current, index) => {
         const formattedData: IFormattedData = Object.entries(current.result).map(entry => {
           const [name, value] = entry;
           return { name, value }
         });
 
         return (
-          <GridItem
+          <DragCard
             key={current.title}
-            backgroundColor="white"
-            textAlign="center"
-            padding={4}
-            border="1px"
-            borderColor="gray.400"
-            borderRadius="md"
-            overflowY="hidden"
+            index={index}
+            id={current.title}
+            moveCard={moveCard}
+            removeChart={removeChart}
             colSpan={(current.chart === 'map' || current.chart === 'line') && { md: 2 }}
           >
-            {current.title}
             {current.chart === 'map' && (
               <Flex 
                 flexDirection={{ sm: "column", md: "row" }}
@@ -76,7 +92,7 @@ export default function Dashboard({ analysis }: IAnalysisList) {
             {current.chart === 'horizontalBar' && <BarChart data={formattedData} layout="vertical" />}
             {current.chart === 'pie' && <PieChart data={formattedData} />}
             {current.chart === 'line' && <LineChart data={formattedData} label={current.title} />}
-          </GridItem>
+          </DragCard>
         )
       })}
     </Grid>
@@ -102,11 +118,11 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
     //     "sendingMethodPreference"
     //   ]
     // }
-  })
+  });
 
   return {
     props: {
-      analysis: data
+      data
     }
   }
 }

@@ -9,8 +9,6 @@ import { useData } from '../hooks/useData';
 
 import { api } from '../services/api';
 
-import { Button, Container, PeriodContainer } from '../styles/pages/Form';
-
 export default function FormPage() {  
   const [incomesPeriod, setIncomesPeriod] = useState(false);
   const [identificationPeriod, setIdentificationPeriod] = useState(false);
@@ -53,7 +51,7 @@ export default function FormPage() {
   }
 
   return (
-    <Container>
+    <div>
       <main>
         <Form ref={formRef} onSubmit={handleSubmit}>
           <Checkbox
@@ -74,7 +72,7 @@ export default function FormPage() {
             <Checkbox name="incomesByPeriod" label="Por Período" onClick={() => setIncomesPeriod(!incomesPeriod)} />
 
             {incomesPeriod && (
-              <PeriodContainer>
+              <div>
                 <Datepicker name="date" label="Período" />
                 <Select
                   name="frequency"
@@ -85,7 +83,7 @@ export default function FormPage() {
                     { value: "Anos", label: "Ano" },
                   ]}
                 />
-              </PeriodContainer>
+              </div>
             )}
           </fieldset>
 
@@ -114,7 +112,7 @@ export default function FormPage() {
             />
             
             {identificationPeriod && (
-              <PeriodContainer>
+              <div>
                 <Datepicker name="date" label="Período" />
                 <Select
                   name="frequency"
@@ -125,7 +123,7 @@ export default function FormPage() {
                     { value: "Anos", label: "Ano" },
                   ]}
                 />
-              </PeriodContainer>
+              </div>
             )}
           </fieldset>
 
@@ -139,7 +137,7 @@ export default function FormPage() {
             />
 
             {cancellationPeriod && (
-              <PeriodContainer>
+              <div>
                 <Datepicker name="date" label="Período" />
                 <Select
                   name="frequency"
@@ -150,7 +148,7 @@ export default function FormPage() {
                     { value: "Anos", label: "Ano" },
                   ]}
                 />
-              </PeriodContainer>
+              </div>
             )}
             <Checkbox name="cancellationsByPaymentMethod" label="Por Método de Pagamento" />
           </fieldset>
@@ -163,10 +161,10 @@ export default function FormPage() {
           </fieldset>
 
           <footer>
-            <Button type="submit">Enviar</Button>
+            <button type="submit">Enviar</button>
           </footer>
         </Form>
       </main>
-    </Container>
+    </div>
   );
 }
