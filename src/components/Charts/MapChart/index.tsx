@@ -7,20 +7,26 @@ import {
   Marker
 } from "react-simple-maps";
 
+type Data = {
+  name: string;
+  value: number;
+}
+
 type MapChartProps = {
-  data: Array<{
-    name: string;
-    value: number;
-  }>;
+  data: Data[];
 }
 
 const geoUrl = "https://raw.githubusercontent.com/fititnt/gis-dataset-brasil/master/uf/topojson/uf.json";
 
-const colorScale = scaleLinear<string>()
-  .domain([0, 114.6])
-  .range(["#ffedea", "#ff5233"]);
-
 export function MapChart({ data }: MapChartProps) {
+  const values = data.map(entry => entry.value);
+  const max = Math.max(...values);
+  const min = Math.min(...values);
+
+  const colorScale = scaleLinear<string>()
+    .domain([min, max])
+    .range(["#ffedea", "#ff5233"]);
+
   return (
     <ComposableMap
       projection="geoAlbers"
@@ -38,28 +44,32 @@ export function MapChart({ data }: MapChartProps) {
         {({ geographies }) => (
           <>
             {geographies.map(geography => {
-              const centroid = geoCentroid(geography);
               const state = data.find(state => state.name === geography.id);
               return (
-                <>
-                  <Geography
-                    key={geography.rsmKey}
-                    stroke="#666"
-                    geography={geography}
-                    fill={colorScale(state ? state.value : 0)}
-                    onMouseEnter={() => console.log(state?.name)}
-                  />
-                  <g key={geography.rsmKey + "-name"}>
-                    {state &&
-                      <Marker coordinates={centroid}>
-                        <text y="2" fontSize={14} textAnchor="middle">
-                          {state.name}
-                        </text>
-                      </Marker>
-                    }
-                  </g>
-                </>
+                <Geography
+                  key={geography.rsmKey}
+                  stroke="#666"
+                  geography={geography}
+                  fill={colorScale(state ? state.value : 0)}
+                  onMouseEnter={() => console.log(state?.name)}
+                />
               )
+            })}
+            {geographies.map(geography => {
+              const centroid = geoCentroid(geography);
+              const state = data.find(state => state.name === geography.id);
+
+              return (
+                <g key={geography.rsmKey + "-name"}>
+                  {state &&
+                    <Marker coordinates={centroid}>
+                      <text y="2" fontSize={14} textAnchor="middle">
+                        {state.name}
+                      </text>
+                    </Marker>
+                  }
+                </g>
+              );
             })}
           </>
         )}

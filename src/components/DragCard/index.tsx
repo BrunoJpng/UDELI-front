@@ -10,8 +10,8 @@ type DragCardProps = GridItemProps & {
   id: string;
   index: number;
   children: ReactNode;
-  moveCard: (dragIndex: number, hoverIndex: number) => void;
-  removeChart: (id: string) => void;
+  moveCard?: (dragIndex: number, hoverIndex: number) => void;
+  removeChart?: (id: string) => void;
 }
 
 type DragItem = {

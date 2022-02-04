@@ -20,17 +20,23 @@ import {
   chakra,
 } from '@chakra-ui/react';
 
+type Data = {
+  name: string;
+  value: number;
+}
+
 type TableProps = {
-  data: Array<{
-    name: string;
-    value: number;
-  }>
+  data: Data[];
+  title: string;
+  headerName: string;
+  headerValue: string;
+  pageSize: number;
 }
 
 export function Table(props: TableProps) {
   const columns = useMemo(() => [
-    { Header: 'Estado', accessor: 'name' },
-    { Header: 'Nº de pedidos', accessor: 'value', isNumeric: true },
+    { Header: props.headerName, accessor: 'name' },
+    { Header: props.headerValue, accessor: 'value', isNumeric: true },
   ], []);
 
   const data = useMemo(() => props.data, [props])
@@ -48,13 +54,13 @@ export function Table(props: TableProps) {
   } = useTable({ 
     columns, 
     data,
-    initialState: { pageSize: 5 }
+    initialState: { pageSize: props.pageSize }
   }, useSortBy, usePagination);
 
   return (
     <Box width={{ sm: "100%", md: "auto" }}>
       <ChakraTable variant='simple' {...getTableProps()}>
-        <TableCaption>Número de pedidos por estado</TableCaption>
+        <TableCaption>{props.title}</TableCaption>
 
         <Thead>
           {headerGroups.map(headerGroup => (

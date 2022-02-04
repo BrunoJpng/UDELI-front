@@ -44,7 +44,7 @@ export function FileContextProvider({ children }: IFileContextProvider) {
       data.append("file", uploadedFile.file, uploadedFile.name);
     }
 
-    api.post("/upload_file", data, {
+    api.post("/upload", data, {
       onUploadProgress: (progressEvent) => {
         let progress = Math.round((progressEvent.loaded * 100) / progressEvent.total);
 

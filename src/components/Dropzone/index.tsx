@@ -2,7 +2,7 @@ import { Box, Text } from '@chakra-ui/react';
 import { ReactNode, useEffect, useRef } from 'react';
 import { useDropzone } from 'react-dropzone';
 
-import { useFiles } from '../../../hooks/useFiles';
+import { useFiles } from '../../hooks/useFiles';
 
 type DropzoneProps = {
   name: string;

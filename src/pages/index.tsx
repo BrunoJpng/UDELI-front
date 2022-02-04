@@ -11,8 +11,8 @@ import {
 
 import { FileContextProvider } from '../contexts/FilesContext';
 
+import { Dropzone } from '../components/Dropzone';
 import { FileList } from '../components/FileList';
-import { Dropzone } from '../components/Form';
 
 export default function Home() {
   const router = useRouter();

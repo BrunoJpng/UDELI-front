@@ -1,7 +1,6 @@
-import { GetServerSideProps } from "next";
 import Head from 'next/head';
 import { useCallback, useState } from "react";
-import { Flex, Grid } from "@chakra-ui/react";
+import { Box, Flex, Grid, useBreakpointValue } from "@chakra-ui/react";
 
 import update from 'immutability-helper';
 
@@ -13,8 +12,10 @@ import {
 } from "../components/Charts";
 import { DragCard } from "../components/DragCard";
 import { Table } from "../components/Table";
+import { Sidebar } from "../components/Sidebar";
 
-import { api } from "../services/api";
+import { useData } from "../hooks/useData";
+import { Header } from '../components/Header';
 
 type Analysis = {
   title: string;
@@ -22,107 +23,108 @@ type Analysis = {
   result: object;
 };
 
-type DashboardProps = {
-  data: Analysis[];
+type Variant = {
+  navigation: 'drawer' | 'sidebar';
+  navigationButton: boolean;
 }
 
-type IFormattedData = Array<{
-  name: string;
-  value: number;
-}>
+const smVariant: Variant = { navigation: 'drawer', navigationButton: true }
+const lgVariant: Variant = { navigation: 'sidebar', navigationButton: false }
 
-export default function Dashboard({ data }: DashboardProps) {
-  const [charts, setCharts] = useState(data);
+export default function Dashboard() {
+  const { data, setData } = useData();
+
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const variants = useBreakpointValue({ base: smVariant, lg: lgVariant });
+
+  const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
 
   const moveCard = useCallback((dragIndex: number, hoverIndex: number) => {
-    const dragCard = charts[dragIndex];
-    setCharts(update(charts, {
+    const dragCard = data[dragIndex];
+    setData(update(data, {
       $splice: [
         [dragIndex, 1],
         [hoverIndex, 0, dragCard]
       ],
     }));
-  }, [charts]);
+  }, [data]);
 
   const removeChart = (id: string) => {
-    setCharts(state => state.filter(chart => chart.title !== id));
+    setData(state => state.filter(chart => chart.title !== id));
   }
 
   return (
-    <Grid
-      as="main"
-      padding={8}
-      gap={4}
-      backgroundColor="gray.100"
-      templateColumns={{
-        md: "repeat(2, 1fr)",
-        xl: "repeat(3, 1fr)"
-      }}
-    >
+    <>
       <Head>
         <title>Udeli | Dashboard</title>
       </Head>
       
-      {charts.map((current, index) => {
-        const formattedData: IFormattedData = Object.entries(current.result).map(entry => {
-          const [name, value] = entry;
-          return { name, value }
-        });
+      <Sidebar
+        variant={variants?.navigation}
+        isOpen={isSidebarOpen}
+        onClose={toggleSidebar}
+      />
 
-        return (
-          <DragCard
-            key={current.title}
-            index={index}
-            id={current.title}
-            moveCard={moveCard}
-            removeChart={removeChart}
-            colSpan={(current.chart === 'map' || current.chart === 'line') && { md: 2 }}
-          >
-            {current.chart === 'map' && (
-              <Flex 
-                flexDirection={{ sm: "column", md: "row" }}
-                alignItems="center"
-                justifyContent="center"
+      <Box marginLeft={!variants?.navigationButton && 400}>
+        <Header
+          showSidebarButton={variants?.navigationButton}
+          onShowSidebar={toggleSidebar}
+        />
+
+        <Grid
+          as="main"
+          padding={8}
+          gap={4}
+          backgroundColor="gray.100"
+          templateColumns={{
+            md: "repeat(2, 1fr)",
+            xl: "repeat(3, 1fr)"
+          }}
+        >
+          {data?.map((current, index) => {
+            return (
+              <DragCard
+                key={current.title}
+                index={index}
+                id={current.title}
+                moveCard={moveCard}
+                removeChart={removeChart}
+                colSpan={(current.chart === 'map' || current.chart === 'line') && { md: 2 }}
               >
-                <MapChart data={formattedData} />
-                <Table data={formattedData} />
-              </Flex>
-            )}
-            {current.chart === 'bar' && <BarChart data={formattedData} />}
-            {current.chart === 'horizontalBar' && <BarChart data={formattedData} layout="vertical" />}
-            {current.chart === 'pie' && <PieChart data={formattedData} />}
-            {current.chart === 'line' && <LineChart data={formattedData} label={current.title} />}
-          </DragCard>
-        )
-      })}
-    </Grid>
+                {current.chart === 'map' && (
+                  <Flex 
+                    flexDirection={{ sm: "column", md: "row" }}
+                    alignItems="center"
+                    justifyContent="center"
+                  >
+                    <MapChart data={current.result} />
+                    <Table 
+                      data={current.result}
+                      title={current.title}
+                      headerName='Estado'
+                      headerValue='Nº de pedidos'
+                      pageSize={5}
+                    />
+                  </Flex>
+                )}
+                {current.chart === 'bar' && <BarChart data={current.result} />}
+                {current.chart === 'horizontalBar' && <BarChart data={current.result} layout="vertical" />}
+                {current.chart === 'pie' && <PieChart data={current.result} />}
+                {current.chart === 'line' && <LineChart data={current.result} label={current.title} />}
+                {current.chart === 'table' && (
+                  <Table 
+                    data={current.result} 
+                    title={current.title}
+                    headerName='Nome'
+                    headerValue='Nº de pedidos'
+                    pageSize={10}
+                  />
+                )}
+              </DragCard>
+            )
+          })}
+        </Grid>
+      </Box>
+    </>
   );
-}
-
-export const getServerSideProps: GetServerSideProps = async ({ req }) => {
-  const { data } = await api.get('/data', { 
-    // headers: {
-    //   Cookie: req.headers.cookie
-    // },
-    // data: {
-    //   query: [
-    //     "state", 
-    //     "city",
-    //     "repeatCostumers",
-    //     "gender",
-    //     "ageGroup",
-    //     "registrationByPeriod",
-    //     "incomesByPeriod",
-    //     "cancellationsByPeriod",
-    //     "paymentMethodPreference",
-    //     "sendingMethodPreference"
-    //   ]
-    // }
-  });
-
-  return {
-    props: {
-      data
-    }
-  }
 }

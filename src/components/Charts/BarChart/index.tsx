@@ -12,7 +12,7 @@ import {
 type BarChartProps = {
   data: Array<{
     name: string;
-    value: number;
+    value: unknown;
   }>;
   layout?: "vertical" | "horizontal"
 }
