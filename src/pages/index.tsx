@@ -44,7 +44,7 @@ export default function Home() {
         </Heading>
 
         <FileContextProvider>
-          <Dropzone name="spreadsheets" />
+          <Dropzone />
           <FileList />
         </FileContextProvider>
 

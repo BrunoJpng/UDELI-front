@@ -1,5 +1,5 @@
 import { ReactNode, useRef } from "react";
-import { Flex, GridItem, GridItemProps } from "@chakra-ui/react";
+import { chakra, Flex, GridItem, GridItemProps, Text } from "@chakra-ui/react";
 import { MdClose } from "react-icons/md";
 import { useDrag, useDrop, DropTargetMonitor } from "react-dnd";
 import { XYCoord } from 'dnd-core';
@@ -18,6 +18,8 @@ type DragItem = {
   id: string;
   index: number;
 }
+
+const CloseButton = chakra(MdClose);
 
 export function DragCard({ 
   children, 
@@ -101,9 +103,11 @@ export function DragCard({
         marginBottom={2}
       >
         <div />
-        {id}
-        <MdClose 
+        <Text fontSize="xl" fontWeight="semibold">{id}</Text>
+        
+        <CloseButton
           size={24} 
+          color="red.700"
           onClick={() => removeChart(id)} 
         />
       </Flex>

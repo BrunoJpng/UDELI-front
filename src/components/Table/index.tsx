@@ -95,6 +95,10 @@ export function Table(props: TableProps) {
                     <Td
                       key={cell.row}
                       isNumeric={cell.column.isNumeric}
+                      maxWidth="250px"
+                      whiteSpace="nowrap"
+                      overflow="hidden"
+                      textOverflow="ellipsis"
                       {...cell.getCellProps()}
                     >
                       {cell.render("Cell")}

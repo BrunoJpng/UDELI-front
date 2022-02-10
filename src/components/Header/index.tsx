@@ -1,12 +1,7 @@
-import { Box, Center, Flex, IconButton, Text } from "@chakra-ui/react";
-import { MdMenu } from "react-icons/md";
+import { Box, Center, Flex, Text } from "@chakra-ui/react";
+import { Sidebar } from "../Sidebar";
 
-type HeaderProps = {
-  showSidebarButton?: boolean;
-  onShowSidebar: () => void;
-}
-
-export function Header({ showSidebarButton = true, onShowSidebar}: HeaderProps) {
+export function Header() {
   return (
     <Flex 
       background="blue.800"
@@ -15,14 +10,7 @@ export function Header({ showSidebarButton = true, onShowSidebar}: HeaderProps) 
       padding={4}
     >
       <Box flex="1">
-        {showSidebarButton && (
-          <IconButton 
-            icon={<MdMenu size={24} />} 
-            aria-label=""
-            variant="outline"
-            onClick={onShowSidebar}
-          />
-        )}
+        <Sidebar />
       </Box>
       <Center flex="1" height="40px">
         <Text>Dashboard</Text>

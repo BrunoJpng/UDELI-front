@@ -1,16 +1,8 @@
 import { Box, Text } from '@chakra-ui/react';
-import { ReactNode, useEffect, useRef } from 'react';
+import { ReactNode, useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 
 import { useFiles } from '../../hooks/useFiles';
-
-type DropzoneProps = {
-  name: string;
-}
-
-type DropzoneRefProps = HTMLInputElement & {
-  acceptedFiles: any;
-}
 
 type UploadMessageProps = {
   children: ReactNode;
@@ -35,67 +27,52 @@ const UploadMessage = ({ children, type }: UploadMessageProps) => (
   </Text>
 );
 
-export function Dropzone({ name }: DropzoneProps) {
-  const dropzoneRef = useRef<DropzoneRefProps>(null);
-  const { uploadedFiles, handleUpload } = useFiles();
+export function Dropzone() {
+  const { handleUpload } = useFiles();
 
-  useEffect(() => {
-    if (dropzoneRef.current) {
-      dropzoneRef.current.acceptedFiles = uploadedFiles;
-    }
-  }, [uploadedFiles]);
+  const onDrop = useCallback((files) => {
+    handleUpload(files);
+  }, [handleUpload])
+
 
   const { getInputProps, getRootProps, isDragActive,  isDragReject } = useDropzone({
     accept: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-    onDrop: onDropAcceptedFiles => {
-      if (dropzoneRef.current) {
-        handleUpload(onDropAcceptedFiles);
-      }
-    },
+    onDrop,
   });
   
   const renderDragMessage = () => {
     if (!isDragActive) {
       return (
-        <UploadMessage>
-          Arraste arquivos aqui ...
-        </UploadMessage>
-      )
+        <UploadMessage>Arraste arquivos aqui...</UploadMessage>
+      );
     }
 
     if (isDragReject) {
       return (
-        <UploadMessage type="error">
-          Arquivo não suportado
-        </UploadMessage>
-      )
+        <UploadMessage type="error">Tipo de arquivo não suportado</UploadMessage>
+      );
     }
 
     return (
-      <UploadMessage type="success">
-        Solte os arquivos aqui
-      </UploadMessage>
-    )
+      <UploadMessage type="success">Solte os arquivos aqui</UploadMessage>
+    );
   };
 
 
   return(
-    <div>
-      <Box
-        border="1px dashed"
-        borderColor={
-          (isDragActive && "green.300") || 
-          (isDragReject && "red.300") ||
-          "gray.300"
-        }
-        borderRadius="4px"
-        cursor="pointer"
-        {...getRootProps()} 
-        onClick={() => dropzoneRef.current?.click()}
-      >
-        <input {...getInputProps()} ref={dropzoneRef} />
-        {renderDragMessage()}
-      </Box>
-    </div>
+    <Box
+      border="1px dashed"
+      borderColor={
+        (isDragActive && "green.300") || 
+        (isDragReject && "red.300") ||
+        "gray.300"
+      }
+      borderRadius="4px"
+      cursor="pointer"
+      {...getRootProps()} 
+    >
+      <input {...getInputProps()} />
+      {renderDragMessage()}
+    </Box>
   );
 }
