@@ -1,7 +1,8 @@
-import { Box, Center, Flex, Text } from "@chakra-ui/react";
-import { Sidebar } from "../Sidebar";
+import { Box, Center, Flex, IconButton, Text } from "@chakra-ui/react";
+import { MdMenu } from "react-icons/md";
 
-export function Header() {
+export function Header({ openSidebar }) {
+
   return (
     <Flex 
       background="blue.800"
@@ -9,9 +10,19 @@ export function Header() {
       justifyContent="center"
       padding={4}
     >
-      <Box flex="1">
-        <Sidebar />
-      </Box>
+      <Flex
+        flex="1"
+        alignItems="center"
+      >
+        <IconButton 
+          icon={<MdMenu size={24} />} 
+          aria-label=""
+          variant="outline"
+          marginRight={2}
+          onClick={openSidebar}
+        />
+        <Text>Acessar formulário</Text>
+      </Flex>
       <Center flex="1" height="40px">
         <Text>Dashboard</Text>
       </Center>

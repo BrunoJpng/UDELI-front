@@ -11,7 +11,7 @@ type DragCardProps = GridItemProps & {
   index: number;
   children: ReactNode;
   moveCard?: (dragIndex: number, hoverIndex: number) => void;
-  removeChart?: (id: string) => void;
+  removeCard?: (id: string) => void;
 }
 
 type DragItem = {
@@ -26,7 +26,7 @@ export function DragCard({
   index, 
   moveCard, 
   id,
-  removeChart,
+  removeCard,
   ...rest }: DragCardProps) {
   const dropRef = useRef<HTMLDivElement>(null);
   const dragRef = useRef<HTMLDivElement>(null);
@@ -108,7 +108,7 @@ export function DragCard({
         <CloseButton
           size={24} 
           color="red.700"
-          onClick={() => removeChart(id)} 
+          onClick={() => removeCard(id)} 
         />
       </Flex>
       {children}

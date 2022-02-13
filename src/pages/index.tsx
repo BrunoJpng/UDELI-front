@@ -9,7 +9,7 @@ import {
   Text
 } from '@chakra-ui/react';
 
-import { FileContextProvider } from '../contexts/FilesContext';
+import { FileProvider } from '../contexts/FilesContext';
 
 import { Dropzone } from '../components/Dropzone';
 import { FileList } from '../components/FileList';
@@ -43,10 +43,10 @@ export default function Home() {
           Envie as planilhas que deseja analisar
         </Heading>
 
-        <FileContextProvider>
+        <FileProvider>
           <Dropzone />
           <FileList />
-        </FileContextProvider>
+        </FileProvider>
 
         <Flex
           alignItems="center"

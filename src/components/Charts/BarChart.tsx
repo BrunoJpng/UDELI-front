@@ -15,43 +15,27 @@ type BarChartProps = {
     name: string;
     value: number | object;
   }>;
-  layout?: "vertical" | "horizontal"
 }
 
-export function BarChart({ data, layout = "horizontal" }: BarChartProps) {
+export function BarChart({ data }: BarChartProps) {
   return (
     <Box width="100%" overflowY="hidden">
-      <ResponsiveContainer 
-        height={550} 
-        minWidth={layout === 'horizontal' && data.length * 60}
-      >
+      <ResponsiveContainer height={550} minWidth={data.length * 60}>
         <BarRechart 
           data={data}
-          layout={layout}
           margin={{
             top: 5,
             right: 10,
-            left: layout === "horizontal" ? 0 : 30,
             bottom: 5,
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
           <Tooltip />
-          {layout === "vertical" ? (
-            <>
-              <XAxis type="number" />
-              <YAxis type="category" dataKey="name" />
-            </>
-          ) : (
-            <>
-              <XAxis dataKey="name" interval={0} />
-              <YAxis />
-            </>
-          )}
+          <XAxis dataKey="name" interval={0} />
+          <YAxis />
           <Bar dataKey="value" name="pedidos" fill="#8884d8" />
         </BarRechart>
       </ResponsiveContainer>
     </Box>
   );
 }
-

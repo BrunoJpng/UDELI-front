@@ -8,12 +8,10 @@ type IFile = {
   id: string;
   name: string;
   readableSize: string;
-  uploaded?: boolean;
-  // preview: string;
   file: File | null;
   progress?: number;
+  uploaded?: boolean;
   error?: boolean;
-  // url: string;
 }
 
 type IFileContextData = {
@@ -28,7 +26,7 @@ type IFileContextProvider = {
 
 export const FileContext = createContext({} as IFileContextData);
 
-export function FileContextProvider({ children }: IFileContextProvider) {
+export function FileProvider({ children }: IFileContextProvider) {
   const [uploadedFiles, setUploadedFiles] = useState<IFile[]>([]);
 
   const updateFile = useCallback((id, data) => {
@@ -54,11 +52,12 @@ export function FileContextProvider({ children }: IFileContextProvider) {
       }
     }).then((response) => {
       console.log(`O arquivo ${uploadedFile.name} já foi enviado para o servidor!`);
-      console.log(response.headers)
       updateFile(uploadedFile.id, { uploaded: true });
-    }).catch(() => {
+    }).catch((error) => {
+      console.log(`Houve um problema para fazer upload do arquivo ${uploadedFile.name} no servidor.`);
+      console.error(error);
       updateFile(uploadedFile.id, { error: true })
-    })
+    });
   }, [updateFile]);
 
   const handleUpload = useCallback((files: File[]) => {

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Box } from '@chakra-ui/react';
 import { 
   LineChart as LineRechart, 
   Line, 
@@ -12,10 +13,9 @@ import {
 import format from 'date-fns/format';
 import ptBR from 'date-fns/locale/pt-BR';
 
-import { DatePicker } from '../../DatePicker';
-import { Box, Input } from '@chakra-ui/react';
+import { DatePicker } from '../DatePicker';
 
-export function LineChart({ data, label }) {
+export function LineChart({ data }) {
   const [dateRange, setDateRange] = useState(data);
   const [startDate, setStartDate] = useState(new Date(dateRange[0].name + ' 03:00'));
   const [endDate, setEndDate] = useState(new Date(dateRange[dateRange.length - 1].name + ' 03:00'));
@@ -27,7 +27,7 @@ export function LineChart({ data, label }) {
     });
 
     setDateRange(newDateRange);
-  }, [startDate, endDate]);
+  }, [startDate, endDate, data]);
 
   const tickFormatter = (tick: string) => {
     if (tick.split('-').length === 1) {
@@ -126,7 +126,6 @@ export function LineChart({ data, label }) {
             <Line
               type="monotone"
               dataKey="value"
-              name={label}
               stroke="#8884d8"
             />
           </LineRechart>

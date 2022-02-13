@@ -5,7 +5,8 @@ import {
   Cell,
   ResponsiveContainer,
   Sector,
-  Text
+  Text,
+  Legend
 } from 'recharts';
 
 const colors = ['#03bb85', '#e57878', '#8884d8', '#ff8042', '#ffbb28', '#8257e5'];
@@ -105,7 +106,7 @@ export function PieChart({ data }) {
   }, [setActiveIndex]);
   
   return (
-    <ResponsiveContainer height={300} width="100%">
+    <ResponsiveContainer height={500} width="100%">
       <PieRechart>
         <Pie
           data={data}
@@ -125,6 +126,12 @@ export function PieChart({ data }) {
             <Cell key={`cell-${index}`} fill={colors[index]} />
           ))}
         </Pie>
+        <Legend
+          layout="vertical"
+          align="center"
+          verticalAlign='bottom'
+          iconType='circle'
+        />
       </PieRechart>
     </ResponsiveContainer>
   );
