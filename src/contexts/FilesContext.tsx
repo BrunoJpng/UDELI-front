@@ -1,4 +1,5 @@
 import { createContext, useState, useCallback, ReactNode } from "react";
+import { useToast } from '@chakra-ui/react';
 import { v4 as uuidv4 } from "uuid";
 import filesize from "filesize";
 
@@ -28,6 +29,7 @@ export const FileContext = createContext({} as IFileContextData);
 
 export function FileProvider({ children }: IFileContextProvider) {
   const [uploadedFiles, setUploadedFiles] = useState<IFile[]>([]);
+  const toast = useToast();
 
   const updateFile = useCallback((id, data) => {
     setUploadedFiles(state => 
@@ -42,7 +44,7 @@ export function FileProvider({ children }: IFileContextProvider) {
       data.append("file", uploadedFile.file, uploadedFile.name);
     }
 
-    api.post("/upload", data, {
+    api.post("/planilhas", data, {
       onUploadProgress: (progressEvent) => {
         let progress = Math.round((progressEvent.loaded * 100) / progressEvent.total);
 
@@ -51,14 +53,33 @@ export function FileProvider({ children }: IFileContextProvider) {
         updateFile(uploadedFile.id, { progress });
       }
     }).then((response) => {
-      console.log(`O arquivo ${uploadedFile.name} já foi enviado para o servidor!`);
-      updateFile(uploadedFile.id, { uploaded: true });
+      toast({
+        title: 'Planilha enviada',
+        description: response.data.message,
+        status: 'success',
+        duration: 9000,
+        isClosable: true,
+      });
+
+      updateFile(uploadedFile.id, { 
+        uploaded: true,
+        id: response.data.id,
+      });
     }).catch((error) => {
+      toast({
+        title: 'Erro',
+        description: error.response.data.message,
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+      });
+
       console.log(`Houve um problema para fazer upload do arquivo ${uploadedFile.name} no servidor.`);
-      console.error(error);
+      console.error(error.message);
+
       updateFile(uploadedFile.id, { error: true })
     });
-  }, [updateFile]);
+  }, [toast, updateFile]);
 
   const handleUpload = useCallback((files: File[]) => {
     const newUploadedFiles: IFile[] = files.map(file => ({
@@ -76,7 +97,7 @@ export function FileProvider({ children }: IFileContextProvider) {
   }, [processUpload, uploadedFiles]);
 
   const deleteFile = (id: string) => {
-    api.delete(`upload/${id}`)
+    api.delete(`planilhas/${id}`);
     setUploadedFiles(state => state.filter(file => file.id !== id));
   };
   

@@ -1,13 +1,23 @@
 import { useCallback, useState } from 'react';
+import { Box } from '@chakra-ui/react';
 import { 
+  Cell,
+  Legend,
   PieChart as PieRechart,
   Pie,
-  Cell,
   ResponsiveContainer,
   Sector,
   Text,
-  Legend
 } from 'recharts';
+
+type Data = {
+  name: string;
+  value: number;
+}
+
+type PieChartProps = {
+  data: Data[];
+}
 
 const colors = ['#03bb85', '#e57878', '#8884d8', '#ff8042', '#ffbb28', '#8257e5'];
 
@@ -98,7 +108,7 @@ const renderActiveShape = (props) => {
   );
 };
 
-export function PieChart({ data }) {
+export function PieChart({ data }: PieChartProps) {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const onPieEnter = useCallback((_, index) => {
@@ -106,33 +116,36 @@ export function PieChart({ data }) {
   }, [setActiveIndex]);
   
   return (
-    <ResponsiveContainer height={500} width="100%">
-      <PieRechart>
-        <Pie
-          data={data}
-          dataKey="value"
-          cx='50%'
-          cy='50%'
-          startAngle={90}
-          endAngle={-270}
-          innerRadius={70}
-          outerRadius={100}
-          activeIndex={activeIndex}
-          activeShape={renderActiveShape}
-          onMouseEnter={onPieEnter}
-          // label={renderActiveShape}
-        >
-          {data.map((_, index) => (
-            <Cell key={`cell-${index}`} fill={colors[index]} />
-          ))}
-        </Pie>
-        <Legend
-          layout="vertical"
-          align="center"
-          verticalAlign='bottom'
-          iconType='circle'
-        />
-      </PieRechart>
-    </ResponsiveContainer>
+    <Box overflowY="hidden">
+      <ResponsiveContainer height={500} width="100%" minWidth={500}>
+        <PieRechart>
+          <Pie
+            data={data}
+            dataKey="value"
+            cx='50%'
+            cy='50%'
+            startAngle={90}
+            endAngle={-270}
+            innerRadius={70}
+            outerRadius={100}
+            activeIndex={activeIndex}
+            activeShape={renderActiveShape}
+            onMouseEnter={onPieEnter}
+          >
+            {data.map((_, index) => (
+              <Cell key={`cell-${index}`} fill={colors[index % 6]} />
+            ))}
+          </Pie>
+
+          <Legend
+            layout="vertical"
+            align="center"
+            verticalAlign='bottom'
+            iconType='circle'
+            onClick={onPieEnter}
+          />
+        </PieRechart>
+      </ResponsiveContainer>
+    </Box>
   );
 }

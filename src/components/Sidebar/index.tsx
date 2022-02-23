@@ -11,28 +11,14 @@ import {
   Stack,
 } from "@chakra-ui/react";
 
-import { api } from "../../services/api";
+import { useCards } from "../../hooks/useCards";
 
-type Result = {
-  name: string;
-  value: number;
-}
+export function Sidebar({ isOpen, onClose }) {
+  const { addCard } = useCards();
 
-type Analysis = {
-  title: string;
-  chart: string;
-  result: Result[];
-}
-
-export function Sidebar({ addCard, isOpen, onClose }) {
   const handleCheck = async (event: ChangeEvent<HTMLInputElement>, query: string) => {
     if (event.target.checked) {
-      try {
-        const { data } = await api.get<Analysis>(`/analysis?column=${query}`);
-        addCard(data);
-      } catch(error) {
-        alert(error.message);
-      }
+      addCard(`/analysis?column=${query}`);
     }
   }
 
@@ -40,7 +26,7 @@ export function Sidebar({ addCard, isOpen, onClose }) {
     <Drawer
       isOpen={isOpen}
       onClose={onClose}
-      placement="left"
+      placement="right"
       size="sm"
     >
       <DrawerOverlay />

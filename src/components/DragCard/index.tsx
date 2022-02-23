@@ -1,17 +1,18 @@
-import { ReactNode, useRef } from "react";
-import { chakra, Flex, GridItem, GridItemProps, Text } from "@chakra-ui/react";
-import { MdClose } from "react-icons/md";
+import { ReactNode, useRef, useState } from "react";
+import { CloseButton, GridItem, GridItemProps, Text } from "@chakra-ui/react";
+
 import { useDrag, useDrop, DropTargetMonitor } from "react-dnd";
 import { XYCoord } from 'dnd-core';
+
+import { useCards } from "../../hooks/useCards";
 
 import { ItemTypes } from "./ItemTypes";
 
 type DragCardProps = GridItemProps & {
   id: string;
+  title: string;
   index: number;
   children: ReactNode;
-  moveCard?: (dragIndex: number, hoverIndex: number) => void;
-  removeCard?: (id: string) => void;
 }
 
 type DragItem = {
@@ -19,17 +20,14 @@ type DragItem = {
   index: number;
 }
 
-const CloseButton = chakra(MdClose);
+export function DragCard(props: DragCardProps) {
+  const [isVisible, setIsVisible] = useState(false);
 
-export function DragCard({ 
-  children, 
-  index, 
-  moveCard, 
-  id,
-  removeCard,
-  ...rest }: DragCardProps) {
+  const { moveCard, removeCard } = useCards();
+
   const dropRef = useRef<HTMLDivElement>(null);
   const dragRef = useRef<HTMLDivElement>(null);
+
   const [{ handlerId }, drop] = useDrop({
     accept: ItemTypes.CARD,
     collect(monitor) {
@@ -43,7 +41,7 @@ export function DragCard({
       }
 
       const dragIndex = item.index;
-      const hoverIndex = index;
+      const hoverIndex = props.index;
 
       if (dragIndex === hoverIndex) {
         return;
@@ -70,6 +68,7 @@ export function DragCard({
   const [{ isDragging }, drag, preview] = useDrag({
     type: ItemTypes.CARD,
     item: () => {
+      const { id, index } = props;
       return { id, index }
     },
     collect: (monitor: any) => ({
@@ -77,41 +76,50 @@ export function DragCard({
     }),
   });
 
-  const opacity = isDragging ? 0 : 1;
-
   preview(drop(dropRef));
   drag(dragRef);
 
   return (
     <GridItem
       ref={dropRef}
-      style={{ opacity }}
       backgroundColor="white"
-      textAlign="center"
-      padding={4}
       border="1px"
       borderColor="gray.400"
       borderRadius="md"
+      boxShadow="base"
+      textAlign="center"
+      padding={4}
       overflowY="hidden"
+      position="relative"
+      opacity={isDragging ? 0 : 1}
       data-handler-id={handlerId}
-      {...rest}
+      onMouseEnter={() => setIsVisible(true)}
+      onMouseLeave={() => setIsVisible(false)}
+      {...props}
     >
-      <Flex
+      <Text 
         ref={dragRef}
-        alignItems="center"
-        justifyContent="space-between"
-        marginBottom={2}
+        fontSize="xl" 
+        fontWeight="semibold"
+        cursor={isDragging ? "grabbing" : "grab"}
       >
-        <div />
-        <Text fontSize="xl" fontWeight="semibold">{id}</Text>
-        
+        {props.title}
+      </Text>
+
+      {isVisible && !isDragging && (
         <CloseButton
-          size={24} 
+          size="lg" 
+          backdropFilter='auto'
+          backdropBlur='8px'
           color="red.700"
-          onClick={() => removeCard(id)} 
+          position="absolute"
+          right={2}
+          top={2}
+          onClick={() => removeCard(props.id)} 
+          _hover={{ color: 'red.600' }}
         />
-      </Flex>
-      {children}
+      )}
+      {props.children}
     </GridItem>
   )
 }

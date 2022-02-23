@@ -37,7 +37,7 @@ export function Table(props: TableProps) {
   const columns = useMemo(() => [
     { Header: props.headerName, accessor: 'name' },
     { Header: props.headerValue, accessor: 'value', isNumeric: true },
-  ], []);
+  ], [props.headerName, props.headerValue]);
 
   const data = useMemo(() => props.data, [props])
 

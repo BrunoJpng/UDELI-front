@@ -9,41 +9,46 @@ import { Table } from '../Table';
 
 
 export function Chart({ data, type }) {
+  const plotData = Object.entries<number>(data).map(entry => ({
+    name: entry[0],
+    value: entry[1]
+  }));
+
   const renderChart = () => {
     if (type === 'bar') {
       return (
-        <BarChart data={data} />
+        <BarChart data={plotData} />
       );
     }
 
     if (type === 'horizontalBar') {
       return (
-        <HorizontalBarChart data={data} />
+        <HorizontalBarChart data={plotData} />
       );
     }
 
     if (type === 'map') {
       return (
-        <MapChart data={data} />
+        <MapChart data={plotData} />
       );
     }
 
     if (type === 'pie') {
       return (
-        <PieChart data={data} />
+        <PieChart data={plotData} />
       );
     }
 
     if (type === 'line') {
       return (
-        <LineChart data={data} />
+        <LineChart data={plotData} />
       );
     }
 
     if (type === 'table') {
       return (
         <Table 
-          data={data} 
+          data={plotData} 
           title="Clientes reincidentes"
           headerName='Nome'
           headerValue='Nº de pedidos'

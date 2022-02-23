@@ -1,78 +1,69 @@
 import Head from 'next/head';
-import NextLink from 'next/link';
 
-import { useCallback, useState } from "react";
-import { Grid, Link, Text, useDisclosure } from "@chakra-ui/react";
-import { BiArrowBack } from "react-icons/bi";
-
-import update from 'immutability-helper';
+import { useEffect, useRef } from 'react';
+import { 
+  Box, 
+  Flex, 
+  Grid, 
+  Skeleton, 
+  SkeletonText, 
+  Text, 
+  useDisclosure 
+} from "@chakra-ui/react";
 
 import { Chart } from "../components/Charts";
 import { DragCard } from "../components/DragCard";
 import { Header } from '../components/Header';
-
 import { Sidebar } from '../components/Sidebar';
 
-type Result = {
-  name: string;
-  value: number;
-}
-
-type Analysis = {
-  title: string;
-  chart: string;
-  result: Result[];
-}
+import { useCards } from '../hooks/useCards';
 
 export default function Dashboard() {
-  const [data, setData] = useState<Analysis[]>([]);
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { cardList, loadingState } = useCards();
+  const ref = useRef<HTMLDivElement>(null);
 
-  const moveCard = useCallback((dragIndex: number, hoverIndex: number) => {
-    const dragCard = data[dragIndex];
-    setData(update(data, {
-      $splice: [
-        [dragIndex, 1],
-        [hoverIndex, 0, dragCard]
-      ],
-    }));
-  }, [data, setData]);
-
-  const addCard = (cardData: Analysis) => {
-    setData(state => state.concat(cardData));
-  }
-
-  const removeCard = (id: string) => {
-    setData(state => state.filter(chart => chart.title !== id));
-  }
+  useEffect(() => {
+    ref.current?.scrollIntoView({ behavior: 'smooth' })
+  }, [loadingState]);
 
   return (
-    <>
+    <Flex 
+      height="100vh"
+      flexDirection="column"
+    >
       <Head>
         <title>Udeli | Dashboard</title>
       </Head>
 
       <Header openSidebar={onOpen} />
-      <Sidebar addCard={addCard} isOpen={isOpen} onClose={onClose} />
+      <Sidebar isOpen={isOpen} onClose={onClose} />
 
-      <NextLink href='/' passHref>
-        <Link 
-          width='300px' 
-          display='flex'
-          alignItems='center'
-          paddingX={4}
-          paddingY={2}
-          color='blue.800'
-          _hover={{ color: 'blue.700' }}
+      {!cardList.length && !loadingState.length && (
+        <Flex 
+          flexDirection="column"
+          alignItems="center"
+          justifyContent="center"
+          height="100%"
+          marginTop={20}
         >
-          <BiArrowBack size={32} />
-          <Text marginLeft={2}>Voltar para a página inicial</Text> 
-        </Link>
-      </NextLink>
+          <Text 
+            fontSize="xl" 
+            fontWeight="semibold"
+            color="gray.700"
+          >
+            Você ainda não solicitou nenhuma análise
+          </Text>
+          <Text>
+            Acesse o menu para solicitar as análises que deseja visualizar
+          </Text>
+        </Flex>
+      )}
 
       <Grid
         as="main"
         padding={8}
+        marginTop={20}
         gap={4}
         flex="1"
         autoRows="min-content"
@@ -81,24 +72,40 @@ export default function Dashboard() {
           xl: "repeat(3, 1fr)"
         }}
       >
-        {data?.map((current, index) => {
+        {cardList.map((card, index) => {
           return (
             <DragCard
-              key={current.title}
+              key={card.id}
               index={index}
-              id={current.title}
-              moveCard={moveCard}
-              removeCard={removeCard}
+              id={card.id}
+              title={card.title}
               colSpan={(
-                current.chart === 'line' ||
-                (current.chart !== 'table' && current.result.length > 10)
+                card.chart_type === 'line' ||
+                (card.chart_type !== 'table' && card.data.length > 10)
               ) && { md: 2 }}
             >
-              <Chart data={current.result} type={current.chart} />
+              <Chart data={card.data} type={card.chart_type} />
             </DragCard>
-          )
+          );
         })}
+
+        {loadingState.map((isLoading, index) => isLoading && (
+          <Box
+            key={index}
+            minHeight='500px'
+            backgroundColor="white"
+            textAlign="center"
+            padding={4}
+            border="1px"
+            borderColor="gray.400"
+            borderRadius="md"
+          >
+            <SkeletonText noOfLines={1} marginBottom={4} />
+            <Skeleton height='100%' />
+          </Box>
+        ))}
+        <div ref={ref} />
       </Grid>
-    </>
+    </Flex>
   );
 }

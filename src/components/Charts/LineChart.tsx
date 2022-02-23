@@ -15,10 +15,19 @@ import ptBR from 'date-fns/locale/pt-BR';
 
 import { DatePicker } from '../DatePicker';
 
-export function LineChart({ data }) {
+type Data = {
+  name: string;
+  value: number;
+}
+
+type LineChartProps = {
+  data: Data[];
+}
+
+export function LineChart({ data }: LineChartProps) {
   const [dateRange, setDateRange] = useState(data);
-  const [startDate, setStartDate] = useState(new Date(dateRange[0].name + ' 03:00'));
-  const [endDate, setEndDate] = useState(new Date(dateRange[dateRange.length - 1].name + ' 03:00'));
+  const [startDate, setStartDate] = useState(new Date(dateRange[0]?.name + ' 03:00'));
+  const [endDate, setEndDate] = useState(new Date(dateRange[dateRange.length - 1]?.name + ' 03:00'));
   
   useEffect(() => {
     const newDateRange = data.filter(item => {

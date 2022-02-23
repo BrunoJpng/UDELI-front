@@ -10,11 +10,13 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 
+type Data = {
+  name: string;
+  value: number;
+}
+
 type BarChartProps = {
-  data: Array<{
-    name: string;
-    value: number | object;
-  }>;
+  data: Data[];
 }
 
 export function BarChart({ data }: BarChartProps) {

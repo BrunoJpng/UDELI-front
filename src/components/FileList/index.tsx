@@ -1,11 +1,12 @@
-import { MdCheckCircle, MdError } from "react-icons/md";
+import { MdCheckCircle, MdError, MdMoodBad } from "react-icons/md";
 import {
   List,
   ListItem,
   Flex,
-  CircularProgress,
-  CircularProgressLabel,
-  chakra
+  chakra,
+  Progress,
+  Text,
+  Box
 } from '@chakra-ui/react';
 
 import { useFiles } from '../../hooks/useFiles';
@@ -13,20 +14,25 @@ import { useFiles } from '../../hooks/useFiles';
 export function FileList() {
   const { uploadedFiles: files, deleteFile } = useFiles();
 
+  if (!files.length) {
+    return (
+      <chakra.span color='gray.300'>
+        <MdMoodBad size={24} style={{ margin: '0 auto' }} />
+      </chakra.span>
+    )
+  }
+
   return (
-    <List marginTop="20px">
+    <List marginTop={5}>
       {files.map(file => (
         <ListItem 
           key={file.id} 
-          display="flex"
-          justifyContent="space-between"
-          alignItems="center"
           color="gray.700"
           _notFirst={{ marginTop: 4 }}
         >
-          <Flex alignItems="center">
+          <Flex alignItems="center" justifyContent="space-between">
             <Flex flexDirection="column">
-              <strong>{file.name}</strong>
+              <Text fontWeight="semibold">{file.name}</Text>
               <chakra.span
                 fontSize="12px"
                 color="gray.600"
@@ -42,20 +48,18 @@ export function FileList() {
                 >
                   Excluir
                 </chakra.button>
-              </chakra.span>
+              </chakra.span>        
             </Flex>
+
+            <Box>
+              {file.uploaded && <MdCheckCircle size={24} color="#78e5d5" />}
+              {file.error && <MdError size={24} color="#e57878" />}
+            </Box>
           </Flex>
 
-          <div>
-            {!file.uploaded && !file.error && (
-              <CircularProgress value={file.progress || 0} size="24px">
-                <CircularProgressLabel>{file.progress}</CircularProgressLabel>
-              </CircularProgress>
-            )}
-
-            {file.uploaded && <MdCheckCircle size={24} color="#78e5d5" />}
-            {file.error && <MdError size={24} color="#e57878" />}
-          </div>
+          {!file.uploaded && !file.error && (
+            <Progress size='xs' value={file.progress} />
+          )}
         </ListItem>
       ))}
     </List>

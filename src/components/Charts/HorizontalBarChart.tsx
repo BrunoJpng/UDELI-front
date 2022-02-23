@@ -10,14 +10,16 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 
-type BarChartProps = {
-  data: Array<{
-    name: string;
-    value: number | object;
-  }>;
+type Data = {
+  name: string;
+  value: number;
 }
 
-export function HorizontalBarChart({ data }: BarChartProps) {
+type HorizontalBarChartProps = {
+  data: Data[];
+}
+
+export function HorizontalBarChart({ data }: HorizontalBarChartProps) {
   return (
     <Box width="100%" overflowY="hidden">
       <ResponsiveContainer height={550}>
