@@ -1,17 +1,13 @@
 import Head from 'next/head';
 import NextLink from 'next/link';
 
-import { BsArrowRight } from 'react-icons/bs';
 import { 
   Box, 
-  Button, 
   Flex, 
   Heading, 
   Link, 
   Text
 } from '@chakra-ui/react';
-
-import { FileProvider } from '../contexts/FilesContext';
 
 import { Dropzone } from '../components/Dropzone';
 import { FileList } from '../components/FileList';
@@ -40,10 +36,8 @@ export default function Home() {
 
         <Text>Você pode enviar as planilhas de pedidos, clientes e produtos geradas pela Loja Integrada</Text>
 
-        <FileProvider>
-          <Dropzone />
-          <FileList />
-        </FileProvider>
+        <Dropzone />
+        <FileList />
 
         <NextLink href='/dashboard' passHref>
           <Link color='green.400'>
